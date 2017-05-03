@@ -6,16 +6,18 @@ This library is a series of csv parsing functions made for Unity game data manag
 
 # Usage
 
-In your unity project view, right click on any csv files. In the pop-up menu, choose CsvDataUtility -> generate class for csv. If successful, a csharp file will be generated in Script/Data folder (refresh is required for Unity to find the file). The file will contain definition of two classes. CSVNAME_DataEntry and CSVNAME_DataTable.
+In your unity project view, right click on any csv files. In the pop-up menu, choose CsvDataUtility -> generate class for csv. If successful, a csharp file will be generated in Script/Data folder (refresh is required for Unity to find the file). The file will contain definition of two classes: CSVNAME_DataEntry and CSVNAME_DataTable.
 
 To load data from csv, only one line of code is needed:
    ```
-   var heroDataTable = CSVNAME_DataTable.create();
+   // presume that the csv file name is Hero.csv
+   // the generated data class will be named as HeroDataTable
+   var heros = HeroDataTable.create();
    ```
 
 The dataTable will contain all the data from the corresponding csv file, which can be accessed via data keys:
    ```
-   var heroJim = skillDataTable.GetEntry("Jim");
+   var heroJim = heros.GetEntry("Jim");
    Debug.Log ("hero's damage is: " + heroJim.damage);
    Debug.Log ("hero's skills are " + heroJim.skills[0].ToString() + heroJim.skills[1].ToString());
    ```
@@ -37,7 +39,7 @@ To use the library, your csv files must follow a few format rules:
 - Data starts from third row, with the types defined in the second row.
 - Array, enum and vector uses ';' as delimeter
 
-Example csv:
+Example: Hero.csv 
 
 ```
 ID,     Damage,   Skills,          Type,                    IsHuman,    Scale
