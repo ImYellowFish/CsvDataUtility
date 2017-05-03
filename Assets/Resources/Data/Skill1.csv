@@ -1,0 +1,44 @@
+ID,Interrupt,Action, 1Distance Condition ,Distance,Sing,Front Time,Hit Time,Post Time,Hurt,Priority,Attack Type,Type ID,HasCombo,Combo ID,Reduce Endurance,Release Effect,Mirror,Release Sound,Gethit  Effect,Gethit  Effect Rotate,Gethit  Sound,Icon,Name,Describe
+string;key,bool,string,float,float,float,float,float,float,float,int,array<string>,array<string>,bool,string,int,array<string>,bool,string,array<string>,array<int>,string,string,string,string
+play_attack_1,NO,atk_1,0 ,2.5,0,0.2,0.03,0.1,1,0,range,play_attack_1,yes,play_attack_2,0,,YES,player_attack,player_hit,,player_attack_gethit,,,
+play_attack_2,NO,atk_2,0,2.5,0,0.5,0.03,0.2,1.2,0,range,play_attack_2,yes,play_attack_3,0,,NO,player_attack,player_hit,,player_attack_gethit,,,
+play_attack_3,NO,atk_3,0,2.5,0,0.4,0.03,0.3,1.8,0,range,play_attack_3,no,,0,,YES,player_attack,player_hit_big,,player_attack_gethit,,,
+play_left,NO,evade,0,99999,0,0,999,0.15,0,1,dart,play_left,no,,0,dodge_1,NO,player_roll,,,,,,
+play_right,NO,evade,0,99999,0,0,999,0.15,0,1,dart,play_right,no,,0,dodge_1,NO,player_roll,,,,,,
+play_back,NO,evade,0,99999,0,0,999,0.15,0,1,dart,play_back,no,,0,dodge_1,NO,player_roll,,,,,,
+use_drug,NO,cute,0,999999,0,0,0.1,0.1,-5,1,self,,no,,0,use_drug,NO,use_drug,,,,,,
+wand_play_attack_1,NO,atk_1,0,9,0,0.2,0.03,0.1,0.8,0,missile,wand_play_attack_1,yes,wand_play_attack_2,0,,,boss_magicball_quick_01,,,boss_common_hit,,,
+wand_play_attack_2,NO,atk_2,0,9,0,0.5,0.03,0.3,1.2,0,missile,wand_play_attack_1,yes,wand_play_attack_1,0,,,boss_magicball_quick_01,,,boss_common_hit,,,
+wand_play_attack_3,NO,atk_1,0,9,0,0.2,0.03,0.1,0.4,0,missile,wand_play_attack_3,yes,wand_play_attack_4,0,,,boss_magicball_quick_01,,,boss_common_hit,,,
+wand_play_attack_4,NO,atk_2,0,9,0,0.5,0.03,0.3,0.8,0,missile,wand_play_attack_3,yes,wand_play_attack_3,0,,,boss_magicball_quick_01,,,boss_common_hit,,,
+weapon_skill_sword_01 ,YES,atk_1,0,2.5,0,1,0.5,0.2,1,1,range,weapon_skill_sword_01_1;weapon_skill_sword_01_2;weapon_skill_sword_01_3;weapon_skill_sword_01_4;weapon_skill_sword_01_5,no,,50,,,,,,,1,,
+weapon_skill_sword_02,YES,atk_1,0,2.5,0,1,0.5,0.2,1,1,range,weapon_skill_sword_02,no,,50,,,,,,,2,,
+weapon_skill_wand_01 ,YES,atk_1,0,6,0,1,0.5,0.2,1,1,range,weapon_skill_wand_01 ,no,,50,,,,,,,3,,
+weapon_skill_wand_02,YES,atk_1,0,6,0,1,0.5,0.2,1,1,range,weapon_skill_wand_02,no,,50,,,,,,,4,,
+skeleton_skill_1,NO,attack_slash,0,4,0,1.4,0.1,1.2,1,0,range,skeleton_skill_1,no,,0,,YES,boss_hack,boss_jump_hit,,boss_common_hit,,,
+skeleton_skill_2,NO,enraged,0,3,0,1.5,0.1,1.8,1,0,range,skeleton_skill_2,no,,0,,NO,boss_bomb,boss_jump_hit,,boss_common_hit,,,
+skeleton_skill_3,NO,attack_stab,0,3,0,2,0.1,1.2,1,0,range,skeleton_skill_3,no,,0,,NO,boss_poke,boss_jump_hit,,boss_common_hit,,,
+skeleton_skill_4,NO,jump,9,99999,0,0.2,1,0.2,0,0,dart,skeleton_skill_4,yes,skeleton_king_skill_5,0,,NO,,,,boss_common_hit,,,
+skeleton_skill_5,NO,shield_bash,0,99999,0,0,0.1,1,0.8,0,range,skeleton_skill_5,no,,0,,NO,boss_jump,boss_jump_hit,,boss_common_hit,,,
+skeleton_skill_6,NO,attack_slice,0,4,0,1.45,0.1,1.2,1,0,range,skeleton_skill_6,no,,0,,NO,boss_hack,boss_jump_hit,,boss_common_hit,,,
+skeleton_master_1,NO,atk_1,0,10,0,1.6,0.1,1,1.2,0,missile,skeleton_master_1,no,,,,NO,boss_magicball_quick,skeleton_master_1_hit,,boss_common_hit,,,
+skeleton_master_2,NO,atk_2,0,10,0,1.5,0.1,1,1.5,0,range,skeleton_master_2,no,,,,NO,boss_fireball,skeleton_master_2_hit,,boss_common_hit,,,
+skeleton_master_3,NO,atk_3,0,9999,0,1,0.01,0,0.5,0,range,skeleton_master_3,yes,skeleton_master_3_1,,,NO,boss_electrichit_a,skeleton_master_3_hit,,boss_common_hit,,,
+skeleton_master_3_1,NO,,0,9999,0,1,0.01,0,0.5,0,range,skeleton_master_3,yes,skeleton_master_3_2,,,NO,boss_electrichit_b,skeleton_master_3_hit,,boss_common_hit,,,
+skeleton_master_3_2,NO,,0,9999,0,1,0.01,1,0.5,0,range,skeleton_master_3,no,,,,NO,boss_electrichit_a,skeleton_master_3_hit,,boss_common_hit,,,
+skeleton_master_4,NO,atk_2,0,10,0,1.5,0.5,0.2,1,0,missile,skeleton_master_4,no,,,,NO,boss_magicball_slow,skeleton_master_4_hit,,boss_common_hit,,,
+skeleton_master_5,NO,atk_1,0,10,0,1,0.01,1,0.5,0,missile,skeleton_master_5,no,,,,NO,,skeleton_master_1_hit,,boss_common_hit,,,
+skeleton_king_skill_1,NO,run,0,9999,0,1,1,0,1,0,missile;dart,skeleton_king_skill_1;skeleton_king_skill_1,no,,0,,NO,hero01_lionroar,boss_jump_hit,,boss_common_hit,,,
+skeleton_king_skill_1_1,NO,run,7,9999,0,1,1,0,1,0,missile;dart,skeleton_king_skill_1;skeleton_king_skill_1,no,,0,,NO,hero01_lionroar,boss_jump_hit,,boss_common_hit,,,
+skeleton_king_skill_2,NO,shieldbash,0,9999,0,1,0.5,1,1,0,call,skeleton_king_1,no,,,,,,,,boss_common_hit,,,
+skeleton_king_skill_2_1,NO,shieldbash,7,9999,0,1,0.5,1,1,0,call,skeleton_king_1,no,,,,,,,,boss_common_hit,,,
+skeleton_king_skill_3,NO,enraged,0,9999,0,1.5,0.01,1,0.8,0,missile,skeleton_king_skill_3,no,,,,NO,boss_magicball_slow,skeleton_master_4_hit,,boss_common_hit,,,
+skeleton_king_skill_4,NO,atk_3,7,9999,0,1,0.01,0,0.5,0,range,skeleton_master_3,no,,,,NO,boss_electrichit_a,skeleton_master_3_hit,,boss_common_hit,,,
+skeleton_king_skill_5,NO,atk_2,7,9999,0,1.5,0.1,1,1.5,0,range,skeleton_master_2,no,,,,NO,boss_fireball,skeleton_master_2_hit,,boss_common_hit,,,
+equip_skill_huixue,NO,atk_1,0,9999,1,0.2,0.03,0.1,-0.2,1,range;range;range;range;range,equip_skill_huixue;equip_skill_huixue_1;equip_skill_huixue_2;equip_skill_huixue_3;equip_skill_huixue_4,no,,80,,NO,hero01_bloodbuff,,,,bt_skill01,回血法阵,在脚下创建回血法阵，处于回血法阵中的任意单位会每秒恢复少量生命，持续5秒
+equip_skill_huozhen,NO,atk_1,0,9999,1,0.2,0.03,0.1,0.6,1,range;range;range;range;range,equip_skill_huozhen;equip_skill_huozhen_1;equip_skill_huozhen_2;equip_skill_huozhen_3;equip_skill_huozhen_4;equip_skill_huozhen_5;equip_skill_huozhen_6;equip_skill_huozhen_7;equip_skill_huozhen_8;equip_skill_huozhen_9,no,,80,,NO,hero01_fireskill_start,player_hit_big,,player_attack_gethit,bt_skill02,烈焰法阵,在脚下创建烈焰法阵，处于烈焰法阵中的敌人会每秒受到伤害，持续10秒
+equip_skill_fengche,NO,atk_1,0,9999,0,0.2,0.03,0.1,0.8,1,range;range;range;range;range;range,equip_skill_fengche;equip_skill_fengche_1;equip_skill_fengche_2;equip_skill_fengche_3;equip_skill_fengche_4;equip_skill_fengche_5,no,,80,,NO,hero01_cyclone,player_hit_big,,player_attack_gethit,bt_skill03,旋风斩,发出剑气对身边的敌人持续造成伤害
+equip_skill_baoxue,NO,atk_1,0,9999,0.8,0.2,0.03,0.1,0.5,1,range;range;range;range;range,equip_skill_baoxue;equip_skill_baoxue_1;equip_skill_baoxue_2;equip_skill_baoxue_3;equip_skill_baoxue_4,no,,80,,NO,hero01_snowstorm,player_hit_big,,player_attack_gethit,bt_skill06,暴风雪,对目标所在区域释放暴风雪，对该区域的敌人造成持续冰冻伤害
+equip_skill_bingzhui,NO,atk_1,0,9999,0.5,0.2,0.03,0.1,1.2,1,range,equip_skill_bingzhui,no,,30,,NO,hero01_snowstorm_hit,player_hit_big,,player_attack_gethit,bt_skill05,冰锥,召唤冰锥瞬间对目标造成高额伤害
+equip_skill_hou,NO,atk_1,0,9999,0,0.2,0.03,0.1,1.2,1,range,equip_skill_hou,no,,30,,NO,,player_hit_big,,player_attack_gethit,bt_skill04,圣光怒吼,瞬间对身边的敌人造成神圣伤害
+equip_skill_chongfeng,NO,run,0,10,0,0,0.03,0.1,1.2,1,missile;dart,equip_skill_chongfeng;equip_skill_chongfeng,no,,30,dodge_1,NO,hero01_lionroar,player_hit_big,,player_attack_gethit,bt_skill04,正义冲锋,瞬间冲到敌人面前对其造成伤害
