@@ -30,12 +30,12 @@ You can further control the class names of generated csharp files, by adding add
 
 To use the library, your csv files must follow a few format rules:
 
--csv files should use ',' as delimeter
--First row of csv contains the field name.
--Second row contains the type info. viable types include:
+- csv files should use ',' as delimeter
+- First row of csv contains the field name.
+- Second row contains the type info. viable types include:
     int, float, bool, string, enum, Vector3, array
--Data starts from third row, with the types defined in the second row.
--Array, enum and vector uses ';' as delimeter
+- Data starts from third row, with the types defined in the second row.
+- Array, enum and vector uses ';' as delimeter
 
 Example csv:
 
