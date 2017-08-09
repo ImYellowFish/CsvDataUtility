@@ -3,79 +3,79 @@ using System.Collections.Generic;
 [CSVFilename("Skill1")]
 public class SkillDataEntry{
 
-	[CSVField("ID")]
+	[CSVField("id")]
 	public string id;
 
-	[CSVField("Interrupt")]
+	[CSVField("interrupt")]
 	public bool interrupt;
 
-	[CSVField("Action")]
+	[CSVField("action")]
 	public string action;
 
-	[CSVField("1Distance Condition")]
+	[CSVField("1distance condition")]
 	public float _1distance_condition;
 
-	[CSVField("Distance")]
+	[CSVField("distance")]
 	public float distance;
 
-	[CSVField("Sing")]
+	[CSVField("sing")]
 	public float sing;
 
-	[CSVField("Front Time")]
+	[CSVField("front time")]
 	public float front_time;
 
-	[CSVField("Hit Time")]
+	[CSVField("hit time")]
 	public float hit_time;
 
-	[CSVField("Post Time")]
+	[CSVField("post time")]
 	public float post_time;
 
-	[CSVField("Hurt")]
+	[CSVField("hurt")]
 	public float hurt;
 
-	[CSVField("Priority")]
+	[CSVField("priority")]
 	public int priority;
 
-	[CSVField("Attack Type")]
+	[CSVField("attack type")]
 	public List<string> attack_type;
 
-	[CSVField("Type ID")]
+	[CSVField("type id")]
 	public List<string> type_id;
 
-	[CSVField("HasCombo")]
+	[CSVField("hascombo")]
 	public bool hascombo;
 
-	[CSVField("Combo ID")]
+	[CSVField("combo id")]
 	public string combo_id;
 
-	[CSVField("Reduce Endurance")]
+	[CSVField("reduce endurance")]
 	public int reduce_endurance;
 
-	[CSVField("Release Effect")]
+	[CSVField("release effect")]
 	public List<string> release_effect;
 
-	[CSVField("Mirror")]
+	[CSVField("mirror")]
 	public bool mirror;
 
-	[CSVField("Release Sound")]
+	[CSVField("release sound")]
 	public string release_sound;
 
-	[CSVField("Gethit  Effect")]
+	[CSVField("gethit  effect")]
 	public List<string> gethit__effect;
 
-	[CSVField("Gethit  Effect Rotate")]
+	[CSVField("gethit  effect rotate")]
 	public List<int> gethit__effect_rotate;
 
-	[CSVField("Gethit  Sound")]
+	[CSVField("gethit  sound")]
 	public string gethit__sound;
 
-	[CSVField("Icon")]
+	[CSVField("icon")]
 	public string icon;
 
-	[CSVField("Name")]
+	[CSVField("name")]
 	public string name;
 
-	[CSVField("Describe")]
+	[CSVField("describe")]
 	public string describe;
 
 

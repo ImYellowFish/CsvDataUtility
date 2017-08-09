@@ -12,7 +12,7 @@ namespace CSVDataUtility {
             }
         }
 
-        public override object Serialize(string rawItem, Type expectedType) {
+        public override object Deserialize(string rawItem, Type expectedType) {
             EnforceTypeMatch(expectedType);
 
             try {

@@ -16,18 +16,16 @@ namespace CSVDataUtility {
         public static bool CompareTypeInfo(string typeIdentifier, string csvTypeField) {
             return csvTypeField.Contains(typeIdentifier);
         }
+        
 
-        public static CSVParseException CreateItemParseException(string type) {
-            return new CSVParseException("Item parse error for type: " + type);
-        }
-
-        public static string GetScriptFriendlyName(string rawName, bool toLower) {
+        public static string GetValidScriptVariableName(string rawName, bool toLower) {
             string result;
 
             result = rawName.Trim().Replace(" ", "_");
             if (toLower) {
                 result = result.ToLower();
             }
+
 
             int firstChar;
 
@@ -46,6 +44,21 @@ namespace CSVDataUtility {
 
         public static IImportSetting ImportSetting {
             get { return UnityImportSetting.Instance; }
+        }
+
+        public static string ToTrimedLower(string item)
+        {
+            return item.Trim().ToLower();
+        }
+
+        public static string CorrectDataItemString(string item)
+        {
+            return item.Trim();
+        }
+
+        public static string CorrectHeadItemString(string item)
+        {
+            return item.Trim().ToLower();
         }
     }
 

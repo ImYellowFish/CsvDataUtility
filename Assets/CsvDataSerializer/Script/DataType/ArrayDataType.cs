@@ -3,41 +3,73 @@ using System;
 using System.Reflection;
 
 namespace CSVDataUtility {
-    public class ArrayDataType : ComplexDataTypeBase {
+    public class ArrayDataType : IDataType
+    {
+        protected IDataType baseDataType;
+        protected string typeIdentifier;
+        protected string typeName;
+
         private Type listType;
         private MethodInfo listAddMethod;
         private char arrayDelimeter;
 
-        public ArrayDataType(IDataType baseDataType) : base(baseDataType) {
+        public ArrayDataType(IDataType baseDataType) {            
             Init(baseDataType, CSVConstant.ARRAY_DELIMITER);
-
         }
 
-        public ArrayDataType(IDataType baseDataType, char arrayDelimeter) : base(baseDataType) {
+        public ArrayDataType(IDataType baseDataType, char arrayDelimeter) {
             Init(baseDataType, arrayDelimeter);
         }
 
         
-        public override string ComplexTypeIdentifierPrefix {
+        public string ArrayTypeIdentifierPrefix {
             get {
                 return CSVConstant.ARRAY_TYPE;
             }
         }
-
-        public override string ComplexTypeNamePrefix {
-            get {
+        
+        public string ArrayTypeNamePrefix
+        {
+            get
+            {
                 return "List";
             }
         }
 
+        public string TypeIdentifier
+        {
+            get
+            {
+                return typeIdentifier;
+            }
+        }
 
-        public override Type SystemType {
+        public string OverrideGeneratedVariableDefinition(string definition, string csvVaraibleName)
+        {
+            return definition;
+        }
+
+        public string TypeName
+        {
+            get
+            {
+                return typeName;
+            }
+        }
+
+        public bool IsType(string csvTypeField)
+        {
+            return csvTypeField.Contains(ArrayTypeIdentifierPrefix) && baseDataType.IsType(csvTypeField);
+        }
+
+        
+        public Type SystemType {
             get {
                 return listType;
             }
         }
 
-        public override object Serialize(string rawItem, Type expectedType) {
+        public object Deserialize(string rawItem, Type expectedType) {
             EnforceTypeMatch(expectedType);
 
             // create array of baseType
@@ -48,7 +80,7 @@ namespace CSVDataUtility {
 
             string[] rawElements = rawItem.Split(arrayDelimeter);
             for (int i = 0; i < rawElements.Length; i++) {
-                object element = baseDataType.Serialize(rawElements[i], baseDataType.SystemType);
+                object element = baseDataType.Deserialize(rawElements[i], baseDataType.SystemType);
                 AddToArray(array, element);
             }
 
@@ -65,6 +97,14 @@ namespace CSVDataUtility {
         }
 
         private void Init(IDataType baseDataType, char arrayDelimeter) {
+            if (baseDataType == null)
+                throw new ArgumentException("base type of complex type cannot be null!");
+
+            this.baseDataType = baseDataType;
+
+            typeIdentifier = ArrayTypeIdentifierPrefix + "<" + this.baseDataType.TypeIdentifier + ">";
+            typeName = ArrayTypeNamePrefix + "<" + this.baseDataType.TypeName + ">";
+
             this.arrayDelimeter = arrayDelimeter;
 
             if (baseDataType == null)
@@ -74,6 +114,12 @@ namespace CSVDataUtility {
             listType = typeof(List<>).MakeGenericType(typeArgs);
             listAddMethod = listType.GetMethod("Add");
         }
+
+        private void EnforceTypeMatch(System.Type expectedType)
+        {
+            Helper.EnforceTypeMatch(this, expectedType);
+        }
+
 
     }
 }

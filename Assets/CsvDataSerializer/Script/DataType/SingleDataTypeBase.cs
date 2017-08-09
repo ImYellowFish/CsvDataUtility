@@ -14,7 +14,7 @@
             }
         }
 
-        public virtual string GetDecoratedTypeDefinition(string definition, string csvVariableName) {
+        public virtual string OverrideGeneratedVariableDefinition(string definition, string csvVariableName) {
             return definition;
         }
 
@@ -22,7 +22,7 @@
             return csvTypeField.Contains(TypeIdentifier);
         }
 
-        public abstract object Serialize(string rawItem, System.Type expectedType);
+        public abstract object Deserialize(string rawItem, System.Type expectedType);
 
         protected static CSVParseException CreateItemParseException(string type) {
             return new CSVParseException("Item parse error for type: " + type);

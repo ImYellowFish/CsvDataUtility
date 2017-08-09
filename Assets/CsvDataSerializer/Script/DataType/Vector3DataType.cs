@@ -12,7 +12,7 @@ namespace CSVDataUtility {
 
         public override string TypeIdentifier {
             get {
-                return "vector";
+                return "vector3";
             }
         }
 
@@ -28,18 +28,21 @@ namespace CSVDataUtility {
             }
         }
 
-        public override object Serialize(string rawItem, Type expectedType) {
+        public override object Deserialize(string rawItem, Type expectedType) {
             EnforceTypeMatch(expectedType);
 
-            List<float> floatList = arrayType.Serialize(rawItem, typeof(List<float>)) as List<float>;
+            List<float> floatList = arrayType.Deserialize(rawItem, typeof(List<float>)) as List<float>;
 
             if (floatList == null)
                 throw new CSVParseException("Failed to parse Vector3 format: " + rawItem);
 
-            if (floatList.Count != 3)
-                throw new CSVParseException("Vector3 has incorrect number of elements: " + rawItem);
+            Vector3 result = Vector3.zero;
+            for(int i = 0; i < Mathf.Min(3, floatList.Count); i++)
+            {
+                result[i] = floatList[i];
+            }
 
-            return new Vector3(floatList[0], floatList[1], floatList[2]);
+            return result;
         }
     }
 }

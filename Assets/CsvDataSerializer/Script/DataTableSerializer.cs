@@ -23,38 +23,21 @@ namespace CSVDataUtility {
         public DataTableSerializer(string csvContentText) {
             CSVReader reader = new CSVReader(csvContentText);
             splitContent = reader.Read();
-
-            csvFields = new List<string>();
-            csvFields.AddRange(splitContent[0]);
-
-            csvTypes = new List<string>();
-            csvTypes.AddRange(splitContent[1]);
-
-            // check for key column index
-            for (int i = 0; i < csvTypes.Count; i++) {
-                if (csvTypes[i].Contains(KEY_IDENTIFIER)) {
-                    keyIndex = i;
-                }
-            }
-
-            if (keyIndex == -1) {
-                throw new CSVParseException("cannot find key column!");
-            }
-
+            InitializeDataTableHeadInfo();
         }
 
-        
-        private string GetKey(int row) {
-            return splitContent[row][keyIndex];
-        }
-
+        /// <summary>
+        /// Deserialize csv content into DataTable class
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public Dictionary<string, T> Deserialize<T>() {
             Dictionary<string, T> result = new Dictionary<string, T>();
             for(int i = 2; i < splitContent.Count; i++) {
                 object rowObj = DeserializeRow(i, typeof(T));
-                string key = GetKey(i);
+                string key = GetKeyStringForRow(i);
 
-                if (rowObj is T) {
+                if (rowObj != null) {
                     try {
                         result.Add(key, (T) rowObj);
                     } catch (ArgumentException) {
@@ -74,34 +57,34 @@ namespace CSVDataUtility {
             return result;
         }
         
-
-        public object DeserializeItem(string item, string typeInfo, Type expectedType) {
-            IDataType dataType = dataTypeFactory.GetDataType(typeInfo);
-            return dataType.Serialize(item, expectedType);
-        }
-
-
+        /// <summary>
+        /// Deserialize a row of content into DataEntry class
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="targetType"></param>
+        /// <returns></returns>
         public object DeserializeRow(int row, Type targetType) {
             currentRow = row;
             string[] rowData = splitContent[row];
 
             // object activator
             object resultRowObj = Activator.CreateInstance(targetType);
-            FieldInfo[] fieldInfos = resultRowObj.GetType().GetFields();
+            FieldInfo[] targetFieldInfos = resultRowObj.GetType().GetFields();
 
 
-            for (int i = 0; i < fieldInfos.Length; i++) {
-                FieldInfo field = fieldInfos[i];
+            for (int i = 0; i < targetFieldInfos.Length; i++) {
+                FieldInfo field = targetFieldInfos[i];
                 currentColumn = i;
 
                 // check whether the class field matches csv fields
-                string expectedCsvFieldName = GetCSVFieldName(field);
+                string expectedCsvFieldName = GetCSVFieldNameByFieldInfo(field);
 
                 if (expectedCsvFieldName == null) {
                     // CSVHelper.LogWarning("Field skipped for type: " + targetType.Name + ", field: " + field.Name);
 
                     // all fields in the class must be deserialized
-                    throw new CSVParseException("Field not marked for deserialization: " + targetType.Name + ", field: " + field.Name);
+                    throw new CSVParseException("Field not marked for deserialization: " + 
+                        targetType.Name + ", field: " + field.Name, currentColumn, currentRow);
                 }
 
                 if (!csvFields.Contains(expectedCsvFieldName)) {
@@ -142,33 +125,83 @@ namespace CSVDataUtility {
             return resultRowObj;
         }
 
-        
 
-        private static string GetCSVFieldName(FieldInfo field) {
+
+        /// <summary>
+        /// Given a string element in the csv and target type
+        /// Deserialize it into an object of the target type
+        /// </summary>
+        /// <param name="item"></param>
+        /// <param name="typeInfo"></param>
+        /// <param name="expectedType"></param>
+        /// <returns></returns>
+        public object DeserializeItem(string item, string typeInfo, Type expectedType)
+        {
+            IDataType dataType = dataTypeFactory.GetDataType(typeInfo);
+            try
+            {
+                return dataType.Deserialize(Helper.CorrectDataItemString(item), expectedType);
+            }
+            catch(CSVParseException e)
+            {
+                throw new CSVParseException(e.ToString(), currentRow, currentColumn);
+            }
+            catch (Exception e)
+            {
+                throw new CSVParseException("Unknown exception: " + e.ToString(), currentRow, currentColumn);
+            }
+        }
+
+
+        /// <summary>
+        /// process fields and types info from csv content
+        /// </summary>
+        private void InitializeDataTableHeadInfo()
+        {
+            // save fields row and types row as list
+            csvFields = new List<string>(splitContent[0]);
+            csvTypes = new List<string>(splitContent[1]);
+
+            // make sure the two list have the same count
+            if (csvFields.Count != csvTypes.Count)
+                throw new CSVParseException("Field and types count dont match, fields: " + 
+                    csvFields.Count + "types: " + csvTypes.Count);
+
+            // trim field and type
+            // change them to lower string (same as the rule in code generator)
+            for(int i = 0; i < csvTypes.Count; i++)
+            {
+                csvTypes[i] = Helper.CorrectHeadItemString(csvTypes[i]);
+                csvFields[i] = Helper.CorrectHeadItemString(csvFields[i]);
+            }
+
+
+            // check for key column index
+            keyIndex = -1;
+            for (int i = 0; i < csvTypes.Count; i++)
+            {
+                if (csvTypes[i].Contains(KEY_IDENTIFIER))
+                {
+                    keyIndex = i;
+                }
+            }
+
+            if (keyIndex == -1)
+            {
+                throw new CSVParseException("cannot find key column!");
+            }
+        }
+
+
+
+        private static string GetCSVFieldNameByFieldInfo(FieldInfo field) {
             return CSVFieldAttribute.GetCsvFieldName(field);
         }
-
-        private static object ObjArrayToTypeArray(List<object> objArray, Type targetArrayType) {
-            if (objArray == null) {
-                throw new CSVParseException("Null object array!");
-            }
-
-            object resultArray = Activator.CreateInstance(targetArrayType);
-
-            if (objArray.Count == 0)
-                return resultArray;
-
-            Type valueType = objArray[0].GetType();
-            MethodInfo add = resultArray.GetType().GetMethod("Add");
-
-            foreach (object element in objArray) {
-                if (element.GetType() != valueType) {
-                    throw new CSVParseException("Inconsistent value types for object array!");
-                }
-                add.Invoke(resultArray, new[] { Convert.ChangeType(element, valueType) });
-            }
-
-            return resultArray;
+        
+        private string GetKeyStringForRow(int row)
+        {
+            return splitContent[row][keyIndex];
         }
+
     }
 }

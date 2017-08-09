@@ -24,7 +24,7 @@ namespace CSVDataUtility {
             }
         }
 
-        public string GetDecoratedTypeDefinition(string definition, string csvVaraibleName) { 
+        public string OverrideGeneratedVariableDefinition(string definition, string csvVaraibleName) { 
             return definition; 
         }
 
@@ -52,12 +52,8 @@ namespace CSVDataUtility {
             get;
         }
 
-        public abstract object Serialize(string rawItem, Type expectedType);
-
-        protected void EnforceTypeMatch(System.Type expectedType) {
-            Helper.EnforceTypeMatch(this, expectedType);
-        }
-
+        public abstract object Deserialize(string rawItem, Type expectedType);
+        
 
     }
 }

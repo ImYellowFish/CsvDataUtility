@@ -11,17 +11,18 @@
         string TypeIdentifier { get; }
 
         /// <summary>
-        /// Type name that is used in generated class.
+        /// Type name that is used for code generation.
         /// </summary>
         string TypeName { get; }
 
 
         /// <summary>
-        /// Process the definition from the class writer, with csvVariableName provided
+        /// Process the definition from the code generator, with csvVariableName provided
+        /// The original definition will be replaced by the result from this method
         /// Useful to customerize class generation process
         /// used in EnumDataType
         /// </summary>
-        string GetDecoratedTypeDefinition(string definition, string csvVariableName);
+        string OverrideGeneratedVariableDefinition(string definition, string csvVariableName);
 
 
         /// <summary>
@@ -37,7 +38,7 @@
         /// </summary>
         /// <param name="item"></param>
         /// <returns></returns>
-        object Serialize(string item, System.Type expectedType);
+        object Deserialize(string item, System.Type expectedType);
 
     }
 

@@ -57,7 +57,7 @@ namespace CSVDataUtility {
         private void InitDataEntryTableName(string csvName) {
             var rule = Helper.ImportSetting.FindRuleByCsvName(csvName);
             if(rule == null) {
-                string defaultDataName = Helper.GetScriptFriendlyName(csvName, false);
+                string defaultDataName = Helper.GetValidScriptVariableName(csvName, false);
                 dataEntryName = defaultDataName + "DataEntry";
                 dataTableName = defaultDataName + "DataTable";
             } else {
@@ -67,9 +67,9 @@ namespace CSVDataUtility {
         }
         
         private void WriteVariable(string fieldName, string typeInfo) {
-            fieldName = fieldName.Trim();
+            fieldName = Helper.CorrectHeadItemString(fieldName);
 
-            string variableName = Helper.GetScriptFriendlyName(fieldName, true);
+            string variableName = Helper.GetValidScriptVariableName(fieldName, true);
             if (variableName.Contains(CSVConstant.IDENTIFIER_OMIT_COLUMN))
                 return;
 

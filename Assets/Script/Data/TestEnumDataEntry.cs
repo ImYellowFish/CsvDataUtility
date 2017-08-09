@@ -3,15 +3,15 @@ using System.Collections.Generic;
 [CSVFilename("TestEnum")]
 public class TestEnumDataEntry{
 
-	[CSVField("ID")]
+	[CSVField("id")]
 	public string id;
 
-	[CSVField("SkillType")]
+	[CSVField("skilltype")]
 	public skilltype_values skilltype;
 
 	public enum skilltype_values { range = 0, dart = 1, }
 
-	[CSVField("SkillPos")]
+	[CSVField("skillpos")]
 	public UnityEngine.Vector3 skillpos;
 
 

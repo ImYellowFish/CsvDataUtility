@@ -34,7 +34,7 @@ namespace CSVDataUtility {
 
             string typeDefinition = "\t[CSVField(\"" + csvFieldName + "\")]\n\tpublic " + type.TypeName + " " + variableName + ";\n";
 
-            file.WriteLine(type.GetDecoratedTypeDefinition(typeDefinition, variableName));
+            file.WriteLine(type.OverrideGeneratedVariableDefinition(typeDefinition, variableName));
         }
 
         private const string _template = @"

@@ -15,7 +15,7 @@ namespace CSVDataUtility {
         }
 
         // string type, return as it is
-        public override object Serialize(string rawItem, Type expectedType) {
+        public override object Deserialize(string rawItem, Type expectedType) {
             EnforceTypeMatch(expectedType);
             return rawItem;
         }
