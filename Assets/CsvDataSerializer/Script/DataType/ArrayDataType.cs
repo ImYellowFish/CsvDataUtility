@@ -5,14 +5,19 @@ using System.Reflection;
 namespace CSVDataUtility {
     public class ArrayDataType : IDataType
     {
+        // base type info
         protected IDataType baseDataType;
-        protected string typeIdentifier;
         protected string typeName;
+        protected string typeNameForWriter;
+        protected char arrayDelimeter;
 
-        private Type listType;
+        // reflection info
+        protected Type baseSystemType;
+        protected Type listSystemType;
         private MethodInfo listAddMethod;
-        private char arrayDelimeter;
+        private bool reflectionInitiated = false;
 
+        
         public ArrayDataType(IDataType baseDataType) {            
             Init(baseDataType, CSVConstant.ARRAY_DELIMITER);
         }
@@ -22,32 +27,9 @@ namespace CSVDataUtility {
         }
 
         
-        public string ArrayTypeIdentifierPrefix {
-            get {
-                return CSVConstant.ARRAY_TYPE;
-            }
-        }
-        
-        public string ArrayTypeNamePrefix
-        {
-            get
-            {
-                return "List";
-            }
-        }
-
-        public string TypeIdentifier
-        {
-            get
-            {
-                return typeIdentifier;
-            }
-        }
-
-        public string OverrideGeneratedVariableDefinition(string definition, string csvVaraibleName)
-        {
-            return definition;
-        }
+        public static readonly string ArrayTypeIdentifierPrefix = CSVConstant.ARRAY_TYPE;
+        public static readonly string ArrayTypeNamePrefix = "List";
+      
 
         public string TypeName
         {
@@ -57,30 +39,61 @@ namespace CSVDataUtility {
             }
         }
 
+        public string GetTypeNameForWriter(string variableName)
+        {
+            return typeNameForWriter;
+        }
+
+        public string GetAdditionalInfoForWriter(string variableName)
+        {
+            return "";
+        }
+        
+
         public bool IsType(string csvTypeField)
         {
-            return csvTypeField.Contains(ArrayTypeIdentifierPrefix) && baseDataType.IsType(csvTypeField);
+            return csvTypeField == ArrayTypeIdentifierPrefix;
         }
 
-        
-        public Type SystemType {
-            get {
-                return listType;
+        private void InitReflectionTypeInfo(Type expectedListType)
+        {
+            if (reflectionInitiated)
+                return;
+
+            try
+            {
+                this.listSystemType = expectedListType;
+                this.baseSystemType = expectedListType.GetGenericArguments()[0];
+                listAddMethod = expectedListType.GetMethod("Add");
+
             }
+            catch (System.Exception e)
+            {
+                Helper.LogWarning(e);                
+            }
+
+            if (listSystemType == null || baseSystemType == null || listAddMethod == null)
+            {
+                throw new CSVParseException("Cannot init reflection for array type: List+" + baseDataType.TypeName +
+                ", expected type: " + expectedListType.Name);
+            }
+
+            reflectionInitiated = true;
         }
+
 
         public object Deserialize(string rawItem, Type expectedType) {
-            EnforceTypeMatch(expectedType);
-
+            InitReflectionTypeInfo(expectedType);
+            
             // create array of baseType
-            object array =  Activator.CreateInstance(listType);
+            object array =  Activator.CreateInstance(expectedType);
 
             if (rawItem == CSVConstant.EMPTY_ITEM)
                 return array;
 
             string[] rawElements = rawItem.Split(arrayDelimeter);
             for (int i = 0; i < rawElements.Length; i++) {
-                object element = baseDataType.Deserialize(rawElements[i], baseDataType.SystemType);
+                object element = baseDataType.Deserialize(rawElements[i], baseSystemType);
                 AddToArray(array, element);
             }
 
@@ -102,24 +115,14 @@ namespace CSVDataUtility {
 
             this.baseDataType = baseDataType;
 
-            typeIdentifier = ArrayTypeIdentifierPrefix + "<" + this.baseDataType.TypeIdentifier + ">";
-            typeName = ArrayTypeNamePrefix + "<" + this.baseDataType.TypeName + ">";
+            typeName = ArrayTypeIdentifierPrefix + "<" + this.baseDataType.TypeName + ">";
+            typeNameForWriter = ArrayTypeNamePrefix + "<" + this.baseDataType.TypeName + ">";
 
             this.arrayDelimeter = arrayDelimeter;
 
             if (baseDataType == null)
                 throw new ArgumentException("base type of array cannot be null!");
-
-            Type[] typeArgs = { baseDataType.SystemType };
-            listType = typeof(List<>).MakeGenericType(typeArgs);
-            listAddMethod = listType.GetMethod("Add");
-        }
-
-        private void EnforceTypeMatch(System.Type expectedType)
-        {
-            Helper.EnforceTypeMatch(this, expectedType);
-        }
-
-
+            
+        }        
     }
 }

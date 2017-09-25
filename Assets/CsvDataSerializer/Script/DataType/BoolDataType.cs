@@ -2,19 +2,16 @@
 
 namespace CSVDataUtility {
     public class BoolDataType : SingleDataTypeBase {
-        public override string TypeIdentifier {
+        public override string TypeName {
             get { return CSVConstant.BOOL_TYPE; }
         }
 
-        public override Type SystemType {
-            get {
-                return typeof(bool);
-            }
+        public override string GetTypeNameForWriter(string variableName)
+        {
+            return CSVConstant.BOOL_TYPE;
         }
 
         public override object Deserialize(string rawItem, Type expectedType) {
-            EnforceTypeMatch(expectedType);
-
             string lower = rawItem.ToLower();
             if (lower.Contains(CSVConstant.BOOL_TRUE)) {
                 return true;

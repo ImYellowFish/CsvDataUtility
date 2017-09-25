@@ -2,21 +2,19 @@
 
 namespace CSVDataUtility {
     public class StringDataType : SingleDataTypeBase {
-        public override Type SystemType {
-            get {
-                return typeof(string);
-            }
-        }
-
-        public override string TypeIdentifier {
+        public override string TypeName {
             get {
                 return CSVConstant.STRING_TYPE;
             }
         }
 
+        public override string GetTypeNameForWriter(string variableName)
+        {
+            return CSVConstant.STRING_TYPE;
+        }
+
         // string type, return as it is
         public override object Deserialize(string rawItem, Type expectedType) {
-            EnforceTypeMatch(expectedType);
             return rawItem;
         }
     }

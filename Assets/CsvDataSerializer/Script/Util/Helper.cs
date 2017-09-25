@@ -35,13 +35,7 @@ namespace CSVDataUtility {
             }
             return result;
         }
-
-        public static void EnforceTypeMatch(IDataType dataType, Type expectedType) {
-            if (expectedType != dataType.SystemType) {
-                throw new CSVParseException("Deserialize type dismatch: csv type: " + dataType.TypeName + ", class type: " + expectedType.Name);
-            }
-        }
-
+        
         public static IImportSetting ImportSetting {
             get { return UnityImportSetting.Instance; }
         }
@@ -59,6 +53,25 @@ namespace CSVDataUtility {
         public static string CorrectHeadItemString(string item)
         {
             return item.Trim().ToLower();
+        }
+
+        /// <summary>
+        /// Look for a nested typeInfo like A<B>
+        /// </summary>
+        public static bool AnalyzeNestingTypeInfo(string typeInfo, out string prefix, out string nesting)
+        {
+            int startIndex = typeInfo.IndexOf('<') + 1;
+            int endIndex = typeInfo.LastIndexOf('>') - 1;
+            if (startIndex <= 0 || startIndex >= typeInfo.Length || endIndex < 0)
+            {
+                prefix = typeInfo;
+                nesting = "";
+                return false;
+            }
+
+            prefix = typeInfo.Substring(0, startIndex - 1);
+            nesting = typeInfo.Substring(startIndex, endIndex - startIndex + 1);
+            return true;
         }
     }
 

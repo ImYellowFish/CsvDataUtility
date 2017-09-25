@@ -1,4 +1,4 @@
-ID,SkillType,SkillPos
-string;key,enum<range;dart>,vector3
-boss, range, 1;2;3
-hero,dart , 3.1;3;5.8
+ID,SkillType,SkillPos,SkillFlag
+string;key,enum<range;dart>,vector3,flag<na;a;b;c>
+boss, range, 1;2;3, a;b
+hero,dart , 3.1;3;5.8, 

@@ -14,6 +14,12 @@ public class TestEnumDataEntry{
 	[CSVField("skillpos")]
 	public UnityEngine.Vector3 skillpos;
 
+	[CSVField("skillflag")]
+	public skillflag_values skillflag;
+
+[System.Flags]
+	public enum skillflag_values { na = 0, a = 1, b = 2, c = 4, }
+
 
 }
 

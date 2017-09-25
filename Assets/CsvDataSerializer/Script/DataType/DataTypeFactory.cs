@@ -3,11 +3,10 @@ using System;
 
 namespace CSVDataUtility {
     public class DataTypeFactory {
-        private IDataType[] baseTypes;
-        private List<IDataType> typeList;
-        
-        public DataTypeFactory() {
-            baseTypes = new IDataType[] {
+        #region Extensible
+        // Add new base types here 
+        // (A type is a base type if its csv identifier does not include "<>")
+        private IDataType[] baseTypes = new IDataType[] {
                 new IntDataType(),
                 new FloatDataType(),
                 new BoolDataType(),
@@ -15,36 +14,54 @@ namespace CSVDataUtility {
                 new Vector3DataType(),
             };
 
-            typeList = new List<IDataType>();
-            for(int i = 0; i < baseTypes.Length; i++) {
-                typeList.Add(new ArrayDataType(baseTypes[i]));
+        // Add new nested types here 
+        // (A type is a base type if its csv identifier includes "<>")
+        private IDataType GetNestedDataType(string typeInfo, string prefix, string nesting)
+        {
+            if (prefix == CSVConstant.ARRAY_TYPE)
+            {
+                IDataType baseType = GetDataType(nesting);
+                return new ArrayDataType(baseType);
             }
 
-            typeList.AddRange(baseTypes);
+            else if (prefix == CSVConstant.ENUM_TYPE)
+            {
+                return new EnumDataType(typeInfo, nesting);
+            }
+
+            else if (prefix == CSVConstant.FLAG_TYPE)
+            {
+                return new FlagDataType(typeInfo, nesting);
+            }
+
+            throw new CSVParseException("Unknown data type in csv: " + prefix + "+" + nesting);
         }
+        #endregion
 
         public IDataType GetDataType(string csvTypeField) {
-            for (int i = 0; i < typeList.Count; i++) {
-                if (typeList[i].IsType(csvTypeField))
-                    return typeList[i];
+            string prefix;
+            string nesting;
+            // Check for nesting type first, e.g. list<> and enum<>
+            if(Helper.AnalyzeNestingTypeInfo(csvTypeField, out prefix, out nesting))
+            {
+                return GetNestedDataType(csvTypeField, prefix, nesting);
             }
-
-            IDataType newType;
-            if (CheckForNewEnumType(csvTypeField, out newType))
-                return newType;
-            
-            
-            throw new CSVParseException("Unknown data type in csv: " + csvTypeField);
+            else
+            {
+                return GetBaseDataType(csvTypeField);
+            }
         }
 
-        private bool CheckForNewEnumType(string csvTypeField, out IDataType newType) {
-            if (csvTypeField.Contains(CSVConstant.ENUM_TYPE)) {
-                newType = new EnumDataType(csvTypeField);
-                return true;
-            }else {
-                newType = null;
-                return false;
+        
+
+        private IDataType GetBaseDataType(string csvTypeField)
+        {
+            for (int i = 0; i < baseTypes.Length; i++)
+            {
+                if (baseTypes[i].IsType(csvTypeField))
+                    return baseTypes[i];
             }
+            throw new CSVParseException("Unknown data type in csv: " + csvTypeField);
         }
         
     }

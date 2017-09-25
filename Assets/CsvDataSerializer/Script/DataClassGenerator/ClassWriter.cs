@@ -32,9 +32,9 @@ namespace CSVDataUtility {
                 return;
             }
 
-            string typeDefinition = "\t[CSVField(\"" + csvFieldName + "\")]\n\tpublic " + type.TypeName + " " + variableName + ";\n";
+            string typeDefinition = "\t[CSVField(\"" + csvFieldName + "\")]\n\tpublic " + type.GetTypeNameForWriter(variableName) + " " + variableName + ";\n";
 
-            file.WriteLine(type.OverrideGeneratedVariableDefinition(typeDefinition, variableName));
+            file.WriteLine(typeDefinition + type.GetAdditionalInfoForWriter(variableName));
         }
 
         private const string _template = @"

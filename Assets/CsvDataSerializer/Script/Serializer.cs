@@ -6,7 +6,6 @@ namespace CSVDataUtility {
         public static Dictionary<string, T> Deserialize<T>(string csvContent) where T : class {
             DataTableSerializer ser = new DataTableSerializer(csvContent);
             return ser.Deserialize<T>();
-        }
-        
+        }        
     }
 }

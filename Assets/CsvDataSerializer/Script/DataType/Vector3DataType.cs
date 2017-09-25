@@ -10,27 +10,17 @@ namespace CSVDataUtility {
             arrayType = new ArrayDataType(new FloatDataType(), ';');
         }
 
-        public override string TypeIdentifier {
+        public override string TypeName {
             get {
                 return "vector3";
             }
         }
 
-        public override string TypeName {
-            get {
-                return "UnityEngine.Vector3";
-            }
+        public override string GetTypeNameForWriter(string variableName) {
+            return "UnityEngine.Vector3";
         }
-
-        public override Type SystemType {
-            get {
-                return typeof(Vector3);
-            }
-        }
-
+        
         public override object Deserialize(string rawItem, Type expectedType) {
-            EnforceTypeMatch(expectedType);
-
             List<float> floatList = arrayType.Deserialize(rawItem, typeof(List<float>)) as List<float>;
 
             if (floatList == null)
