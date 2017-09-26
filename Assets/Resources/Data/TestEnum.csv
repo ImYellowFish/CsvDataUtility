@@ -1,4 +1,4 @@
-ID,SkillType,SkillPos,SkillFlag,EnumArrayTest
-string;key,enum<range;dart>,vector3,flag<na;a;b;c>,array<enum<first;second;third>>
-boss, range, 1;2;3, a;b,first;third
-hero,dart , 3.1;3;5.8, ,
+ID,SkillType,SkillPos,SkillFlag,EnumArrayTest, SkillFlag2
+string;key,enum<range;dart>,vector3,flag<na;a;b;c>,array<enum<first;second;third>>,flag<na;a;b;c>
+boss, range, 1;2;3, a;b,first;third,na
+hero,dart , 3.1;3;5.8, ,,a;b;c

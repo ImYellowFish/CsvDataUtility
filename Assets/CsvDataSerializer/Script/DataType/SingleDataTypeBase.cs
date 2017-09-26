@@ -10,7 +10,11 @@
         {
             return "";
         }
-        
+
+        public virtual string GetExtensionMethodForWriter(string dataEntryName, string variableName) {
+            return "";
+        }
+
         public virtual bool IsType(string csvTypeField) {
             return csvTypeField.Contains(TypeName);
         }

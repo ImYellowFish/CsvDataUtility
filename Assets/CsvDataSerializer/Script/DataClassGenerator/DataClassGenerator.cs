@@ -74,7 +74,7 @@ namespace CSVDataUtility {
                 return;
 
             IDataType dataType = dataTypeFactory.GetDataType(typeInfo);
-            classWriter.WriteVariable(fieldName, variableName, dataType);
+            classWriter.WriteVariable(dataEntryName, fieldName, variableName, dataType);
         }
         
     }

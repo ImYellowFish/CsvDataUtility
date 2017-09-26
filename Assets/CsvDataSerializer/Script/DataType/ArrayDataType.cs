@@ -48,7 +48,12 @@ namespace CSVDataUtility {
         {
             return baseDataType.GetAdditionalInfoForWriter(variableName);
         }
-        
+
+
+        public string GetExtensionMethodForWriter(string dataEntryName, string variableName) {
+            return baseDataType.GetExtensionMethodForWriter(dataEntryName, variableName);
+        }
+
 
         public bool IsType(string csvTypeField)
         {

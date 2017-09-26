@@ -55,8 +55,12 @@ namespace CSVDataUtility {
             additional += "}\n";
             return additional;
         }
-        
-        
+
+
+        public virtual string GetExtensionMethodForWriter(string dataEntryName, string variableName) {
+            return "";
+        }
+
         public virtual object Deserialize(string rawItem, Type expectedType) {
             try {
                 var str = Helper.CorrectHeadItemString(rawItem);

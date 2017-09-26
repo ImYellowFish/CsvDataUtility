@@ -33,6 +33,12 @@ namespace CSVDataUtility
             return additional;
         }
 
+        
+        public override string GetExtensionMethodForWriter(string dataEntryName, string variableName) {
+            string enumTypeName = dataEntryName + "." + GetTypeNameForWriter(variableName);
+            return extensionTemplate.Replace("ENUM_TYPE", enumTypeName);
+        }
+
         public override object Deserialize(string rawItem, Type expectedType)
         {
             int enumValue = 0;
@@ -44,6 +50,13 @@ namespace CSVDataUtility
             }
 
             return Enum.Parse(expectedType, enumValue.ToString());
+        }      
+
+        private static readonly string extensionTemplate = @"
+
+        public static bool ContainsFlag(this ENUM_TYPE self, ENUM_TYPE flag) {
+            return (self & flag) == flag;
         }
+";
     }
 }

@@ -17,6 +17,12 @@
         /// </summary>
         string GetAdditionalInfoForWriter(string variableName);
 
+
+        /// <summary>
+        /// Extension method in generated file that is appended after class definition
+        /// </summary>
+        string GetExtensionMethodForWriter(string dataEntryName, string variableName);
+
         
         /// <summary>
         /// read string and check if it is a value of this type
