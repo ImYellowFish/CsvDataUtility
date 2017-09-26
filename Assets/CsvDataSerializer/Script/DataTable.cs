@@ -58,7 +58,10 @@ namespace CSVDataUtility {
 
 
         protected void Read() {
-            string csvFilename = Helper.ImportSetting.CsvFolderPath + "/" + CSVFilenameAttribute.GetCsvFilename(typeof(T));
+            string csvFilename = CSVFilenameAttribute.GetCsvFilename(typeof(T));
+            if (Helper.ImportSetting.CsvFolderPath.Trim() != "") {
+                csvFilename = Helper.ImportSetting.CsvFolderPath + "/" + csvFilename;
+            }
 
             if (csvFilename == null)
                 throw new CSVParseException("Not a valid csv data class format: " + typeof(T).Name);

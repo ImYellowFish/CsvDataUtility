@@ -8,7 +8,6 @@ namespace CSVDataUtility {
         // base type info
         protected IDataType baseDataType;
         protected string typeName;
-        protected string typeNameForWriter;
         protected char arrayDelimeter;
 
         // reflection info
@@ -41,12 +40,13 @@ namespace CSVDataUtility {
 
         public string GetTypeNameForWriter(string variableName)
         {
+            var typeNameForWriter = ArrayTypeNamePrefix + "<" + baseDataType.GetTypeNameForWriter(variableName) + ">";
             return typeNameForWriter;
         }
 
         public string GetAdditionalInfoForWriter(string variableName)
         {
-            return "";
+            return baseDataType.GetAdditionalInfoForWriter(variableName);
         }
         
 
@@ -116,8 +116,7 @@ namespace CSVDataUtility {
             this.baseDataType = baseDataType;
 
             typeName = ArrayTypeIdentifierPrefix + "<" + this.baseDataType.TypeName + ">";
-            typeNameForWriter = ArrayTypeNamePrefix + "<" + this.baseDataType.TypeName + ">";
-
+            
             this.arrayDelimeter = arrayDelimeter;
 
             if (baseDataType == null)

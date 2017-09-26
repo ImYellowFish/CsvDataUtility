@@ -17,8 +17,13 @@ public class TestEnumDataEntry{
 	[CSVField("skillflag")]
 	public skillflag_values skillflag;
 
-[System.Flags]
+	[System.Flags]
 	public enum skillflag_values { na = 0, a = 1, b = 2, c = 4, }
+
+	[CSVField("enumarraytest")]
+	public List<enumarraytest_values> enumarraytest;
+
+	public enum enumarraytest_values { first = 0, second = 1, third = 2, }
 
 
 }
