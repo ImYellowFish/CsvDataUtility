@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Reflection;
-using System;
+using System.IO;
 
 namespace CSVDataUtility {
     public static class Helper {
@@ -17,7 +17,7 @@ namespace CSVDataUtility {
             return csvTypeField.Contains(typeIdentifier);
         }
         
-
+        
         public static string GetValidScriptVariableName(string rawName, bool toLower) {
             string result;
 
@@ -72,6 +72,31 @@ namespace CSVDataUtility {
             prefix = typeInfo.Substring(0, startIndex - 1);
             nesting = typeInfo.Substring(startIndex, endIndex - startIndex + 1);
             return true;
+        }
+
+        public static int GetKeyColumnIndex(string[] csvTypes)
+        {
+            // check for key column index
+            int keyIndex = -1;
+            for (int i = 0; i < csvTypes.Length; i++)
+            {
+                if (CorrectHeadItemString(csvTypes[i]).Contains(CSVConstant.KEY_IDENTIFIER))
+                {
+                    keyIndex = i;
+                }
+            }
+
+            if (keyIndex == -1)
+            {
+                throw new CSVParseException("cannot find key column!");
+            }
+            return keyIndex;
+        }
+
+        public static void CreateDirectoryIfNotExist(string path)
+        {
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
         }
     }
 

@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 [System.Serializable]
 [CSVFilename("TestEnum")]
-public class TestEnumDataEntry{
-
+public class TestEnumDataEntry : CSVDataUtility.IDataEntry{
+            
 	[CSVField("id")]
 	public string id;
 
@@ -32,7 +32,15 @@ public class TestEnumDataEntry{
 	public enum skillflag2_values { na = 0, a = 1, b = 2, c = 4, }
 
 
+
+    public string internal_dataEntryID { 
+        get {
+            return id;    
+        } 
+    }
 }
+
+
 
 [System.Serializable]
 public class TestEnumDataTable : CSVDataUtility.DataTable<TestEnumDataEntry>{

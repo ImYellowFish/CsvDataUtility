@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace CSVDataUtility {
     
     [System.Serializable]
-    public class DataTable<T> where T : class {
+    public class DataTable<T> where T : IDataEntry {
 
         Dictionary<string, T> data;
         public int dataCount;
@@ -57,10 +57,10 @@ namespace CSVDataUtility {
         }
 
 
-        protected void Read() {
+        public void Read() {
             string csvFilename = CSVFilenameAttribute.GetCsvFilename(typeof(T));
-            if (Helper.ImportSetting.CsvFolderPath.Trim() != "") {
-                csvFilename = Helper.ImportSetting.CsvFolderPath + "/" + csvFilename;
+            if (Helper.ImportSetting.CsvFolderRelativeResourcesPath.Trim() != "") {
+                csvFilename = Helper.ImportSetting.CsvFolderRelativeResourcesPath + "/" + csvFilename;
             }
 
             if (csvFilename == null)
@@ -74,5 +74,21 @@ namespace CSVDataUtility {
             data = Serializer.Deserialize<T>(csv.text);
             dataCount = data.Keys.Count;
         }
+
+
+        protected void ReadDataAsset(DataAsset<T> dataAsset)
+        {
+            data = new Dictionary<string, T>();
+            for (int i = 0; i < dataAsset.data.Length; i++)
+            {
+                var entry = dataAsset.data[i];
+                var key = entry.internal_dataEntryID;
+
+                data.Add(key, entry);
+            }
+            dataCount = data.Keys.Count;
+        }
+
+
     }
 }

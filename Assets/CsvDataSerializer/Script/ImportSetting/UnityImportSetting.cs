@@ -15,18 +15,40 @@ namespace CSVDataUtility {
             }
         }
 
-        public string DataEntryFolderPath {
+        public string DataEntryFolderFullPath {
             get {
                 return Application.dataPath + "/" + dataEntryFolderPath;
             }
         }
+
+        public string DataEntryFolderRelativePath
+        {
+            get
+            {
+                return "Assets/" + dataEntryFolderPath;
+            }
+        }
+
+        [Tooltip("Path for generated scripts, relative to Assets folder")]
         public string dataEntryFolderPath = "Script/Data/";
 
-        public string CsvFolderPath {
+        public string CsvFolderRelativeResourcesPath {
             get { return csvFolderPath; }
         }
+
+        [Tooltip("Path of excel files, relative to Assets folder")]
         public string csvFolderPath = "Data";
 
+
+        public string DataAssetRelativePath
+        {
+            get { return "Assets/" + dataAssetFolderPath; }
+        }
+        
+        [Tooltip("Path of generated scriptableObjects, relative to Assets folder")]
+        public string dataAssetFolderPath = "Resources/DataAsset";
+
+        
         public List<GenerationRule> additionalRules;
         public GenerationRule FindRuleByCsvName(string csvName) {
             return additionalRules.Find((r) => r.csvName.ToLower() == csvName.ToLower());

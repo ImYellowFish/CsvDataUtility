@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-public class TestData : MonoBehaviour {
+public class TestData : MonoBehaviour
+{
     public SkillDataTable skills;
     public SkillDataEntry[] skillList;
 
@@ -8,7 +9,8 @@ public class TestData : MonoBehaviour {
     public TestEnumDataEntry[] enumList;
 
     // Use this for initialization
-    void Start() {
+    void Start()
+    {
         skills = SkillDataTable.Create();
         skillList = skills.ValueArray;
 
@@ -17,7 +19,8 @@ public class TestData : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update() {
+    void Update()
+    {
 
     }
 }

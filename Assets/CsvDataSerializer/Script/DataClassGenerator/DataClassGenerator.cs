@@ -6,10 +6,12 @@ namespace CSVDataUtility {
         private string csvFilename;
         private string dataEntryName;
         private string dataTableName;
+        private string keyVariableName;
 
         private List<string[]> data;
         private string[] fields;
         private string[] types;
+        private int keyIndex;
 
         private DataTypeFactory dataTypeFactory = new DataTypeFactory();
         private ClassWriter classWriter;
@@ -36,21 +38,28 @@ namespace CSVDataUtility {
 
             fields = data[0];
             types = data[1];
+            keyIndex = Helper.GetKeyColumnIndex(types);
+            keyVariableName = Helper.CorrectHeadItemString(fields[keyIndex]);
         }
 
 
         private void Write(string savePath) {
-            // Write class head
-            classWriter = new ClassWriter(savePath, dataEntryName);
-            classWriter.WriteHead(csvFilename, dataEntryName);
+            classWriter = new ClassWriter(savePath, 
+                csvFilename,
+                dataTableName, 
+                dataEntryName, 
+                keyVariableName);
 
-            // Write class body
+            // prepare
+            classWriter.Prepare();
+
+            // write variables
             for (int i = 0; i < fields.Length; i++) {
-                WriteVariable(fields[i], types[i]);
+                ProcessVariable(fields[i], types[i]);
             }
 
-            // Write class end
-            classWriter.WriteEnd(dataTableName, dataEntryName);
+            // finish
+            classWriter.Finish();
         }
 
 
@@ -66,7 +75,7 @@ namespace CSVDataUtility {
             }
         }
         
-        private void WriteVariable(string fieldName, string typeInfo) {
+        private void ProcessVariable(string fieldName, string typeInfo) {
             fieldName = Helper.CorrectHeadItemString(fieldName);
 
             string variableName = Helper.GetValidScriptVariableName(fieldName, true);
@@ -74,7 +83,7 @@ namespace CSVDataUtility {
                 return;
 
             IDataType dataType = dataTypeFactory.GetDataType(typeInfo);
-            classWriter.WriteVariable(dataEntryName, fieldName, variableName, dataType);
+            classWriter.ProcessVariable(fieldName, variableName, dataType);
         }
         
     }

@@ -1,7 +1,7 @@
 ﻿namespace CSVDataUtility {
     public static class CSVConstant{
         public const string IDENTIFIER_OMIT_COLUMN = "(x)";
-
+        public const string KEY_IDENTIFIER = "key";
 
         public const string INT_TYPE = "int";
         public const string STRING_TYPE = "string";

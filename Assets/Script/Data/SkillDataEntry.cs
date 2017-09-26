@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 [System.Serializable]
 [CSVFilename("Skill1")]
-public class SkillDataEntry{
-
+public class SkillDataEntry : CSVDataUtility.IDataEntry{
+            
 	[CSVField("id")]
 	public string id;
 
@@ -79,7 +79,15 @@ public class SkillDataEntry{
 	public string describe;
 
 
+
+    public string internal_dataEntryID { 
+        get {
+            return id;    
+        } 
+    }
 }
+
+
 
 [System.Serializable]
 public class SkillDataTable : CSVDataUtility.DataTable<SkillDataEntry>{
@@ -89,3 +97,4 @@ public class SkillDataTable : CSVDataUtility.DataTable<SkillDataEntry>{
         return datatable;
     }
 }
+

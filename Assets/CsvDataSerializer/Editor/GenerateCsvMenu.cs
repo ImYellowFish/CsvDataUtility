@@ -54,11 +54,8 @@ namespace CSVDataUtility {
         }
 
         private static void Generate(TextAsset selected) {
-            string folderPath = Helper.ImportSetting.DataEntryFolderPath;
-            if (!Directory.Exists(folderPath)) {
-                Directory.CreateDirectory(folderPath);
-            }
-
+            string folderPath = Helper.ImportSetting.DataEntryFolderFullPath;
+            
             DataClassGenerator gen = new DataClassGenerator();
             gen.Generate(selected.name, selected.text, folderPath);
             Debug.Log("Class generated for: " + selected.name);

@@ -5,10 +5,7 @@ using System.Collections.Generic;
 namespace CSVDataUtility {
     
     public class DataTableSerializer {
-        public static readonly string KEY_IDENTIFIER = "key";
-        public static readonly string ARRAY_IDENTIFIER = "array";
-        public static readonly char ARRAY_DELIMITER = ';';
-
+        
         private DataTypeFactory dataTypeFactory = new DataTypeFactory();
         
         private List<string[]> splitContent;
@@ -161,6 +158,7 @@ namespace CSVDataUtility {
             // save fields row and types row as list
             csvFields = new List<string>(splitContent[0]);
             csvTypes = new List<string>(splitContent[1]);
+            keyIndex = Helper.GetKeyColumnIndex(splitContent[1]);
 
             // make sure the two list have the same count
             if (csvFields.Count != csvTypes.Count)
@@ -175,21 +173,6 @@ namespace CSVDataUtility {
                 csvFields[i] = Helper.CorrectHeadItemString(csvFields[i]);
             }
 
-
-            // check for key column index
-            keyIndex = -1;
-            for (int i = 0; i < csvTypes.Count; i++)
-            {
-                if (csvTypes[i].Contains(KEY_IDENTIFIER))
-                {
-                    keyIndex = i;
-                }
-            }
-
-            if (keyIndex == -1)
-            {
-                throw new CSVParseException("cannot find key column!");
-            }
         }
 
 
