@@ -36,7 +36,7 @@ namespace CSVDataUtility {
             get { return csvFolderPath; }
         }
 
-        [Tooltip("Path of excel files, relative to Assets folder")]
+        [Tooltip("Path of excel files, relative to Resources folder")]
         public string csvFolderPath = "Data";
 
 
@@ -45,9 +45,9 @@ namespace CSVDataUtility {
             get { return "Assets/" + dataAssetFolderPath; }
         }
         
-        [Tooltip("Path of generated scriptableObjects, relative to Assets folder")]
-        public string dataAssetFolderPath = "Resources/DataAsset";
 
+        [Tooltip("Path of generated scriptableObjects, relative to Asset folder")]
+        public string dataAssetFolderPath = "Resources/DataAsset";
         
         public List<GenerationRule> additionalRules;
         public GenerationRule FindRuleByCsvName(string csvName) {

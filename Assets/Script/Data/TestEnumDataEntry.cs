@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 [System.Serializable]
 [CSVFilename("TestEnum")]
+[CSVDataAsset("TestEnumDataTable")]
 public class TestEnumDataEntry : CSVDataUtility.IDataEntry{
             
 	[CSVField("id")]

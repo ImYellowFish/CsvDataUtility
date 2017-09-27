@@ -53,6 +53,7 @@ namespace CSVDataUtility {
             return IsDirectory(selected);
         }
 
+        
         private static void Generate(TextAsset selected) {
             string folderPath = Helper.ImportSetting.DataEntryFolderFullPath;
             

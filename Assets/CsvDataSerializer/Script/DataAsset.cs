@@ -10,7 +10,7 @@ namespace CSVDataUtility
     }
 
     [System.Serializable]
-    public class DataAsset<T> : ScriptableObject, IDataAsset where T : IDataEntry
+    public abstract class DataAsset<T> : ScriptableObject, IDataAsset where T : IDataEntry
     {
         public T[] data;
         

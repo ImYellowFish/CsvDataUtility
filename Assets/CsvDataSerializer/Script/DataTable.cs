@@ -58,8 +58,15 @@ namespace CSVDataUtility {
 
 
         public void Read() {
+            //ReadFromCsv();
+            ReadFromDataAsset();
+        }
+
+        protected void ReadFromCsv()
+        {
             string csvFilename = CSVFilenameAttribute.GetCsvFilename(typeof(T));
-            if (Helper.ImportSetting.CsvFolderRelativeResourcesPath.Trim() != "") {
+            if (Helper.ImportSetting.CsvFolderRelativeResourcesPath.Trim() != "")
+            {
                 csvFilename = Helper.ImportSetting.CsvFolderRelativeResourcesPath + "/" + csvFilename;
             }
 
@@ -67,7 +74,8 @@ namespace CSVDataUtility {
                 throw new CSVParseException("Not a valid csv data class format: " + typeof(T).Name);
 
             TextAsset csv = Resources.Load<TextAsset>(csvFilename);
-            if (csv == null) {
+            if (csv == null)
+            {
                 throw new CSVParseException("Cannot find expected csv: " + csvFilename);
             }
 
@@ -76,8 +84,19 @@ namespace CSVDataUtility {
         }
 
 
-        protected void ReadDataAsset(DataAsset<T> dataAsset)
+        protected void ReadFromDataAsset()
         {
+            string dataAssetPath = CSVDataAssetAttribute.GetDataTableName(typeof(T));
+            if (Helper.ImportSetting.DataAssetRelativePath.Trim() != "")
+            {
+                dataAssetPath = Helper.ImportSetting.DataAssetRelativePath + "/" + dataAssetPath;
+            }
+
+            dataAssetPath = Helper.GetRelativePathToResourcsFolder(dataAssetPath);
+
+            var obj = Resources.Load(dataAssetPath);
+            DataAsset<T> dataAsset = obj as DataAsset<T>;
+
             data = new Dictionary<string, T>();
             for (int i = 0; i < dataAsset.data.Length; i++)
             {

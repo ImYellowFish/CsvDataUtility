@@ -95,6 +95,7 @@ namespace CSVDataUtility {
         private const string dataEntryTemplate = @"using System.Collections.Generic;
 [System.Serializable]
 [CSVFilename(""CSV_FILE_NAME"")]
+[CSVDataAsset(""DATATABLE_NAME"")]
 public class DATA_ENTRY_NAME : CSVDataUtility.IDataEntry{
             
 DATA_ENTRY_CONTENT
@@ -114,9 +115,10 @@ DATA_ENTRY_CONTENT
         {
             dataEntryClassFramework = dataEntryTemplate.
                 Replace("CSV_FILE_NAME", csvFilename).
+                Replace("DATATABLE_NAME", dataTableName).
                 Replace("DATA_ENTRY_NAME", dataEntryName).
                 Replace("KEY_VARIABLE_NAME", keyVariableName);
-
+                
             dataEntryClassContent = "";
         }
 
@@ -155,8 +157,9 @@ public class DATATABLE_NAME : CSVDataUtility.DataTable<DATA_ENTRY_NAME>{
 
         #region DataAsset class
         
-        private const string dataAssetTemplate = 
-@"public class DATATABLE_NAME_Asset : CSVDataUtility.DataAsset<DATA_ENTRY_NAME>
+        private const string dataAssetTemplate =
+@"[CSVDataAsset(""DATATABLE_NAME"")]
+public class DATATABLE_NAME_Asset : CSVDataUtility.DataAsset<DATA_ENTRY_NAME>
 {
 
 }
@@ -170,7 +173,7 @@ public class DATATABLE_NAME : CSVDataUtility.DataTable<DATA_ENTRY_NAME>{
             assetClassFile.Write(tmp);
         }
 
-        private const string dataAssetEditorTemplate = 
+        private const string dataAssetEditorTemplate =
 @"using UnityEngine;
 using UnityEditor;
 

@@ -41,4 +41,3 @@ equip_skill_fengche,NO,atk_1,0,9999,0,0.2,0.03,0.1,0.8,1,range;range;range;range
 equip_skill_baoxue,NO,atk_1,0,9999,0.8,0.2,0.03,0.1,0.5,1,range;range;range;range;range,equip_skill_baoxue;equip_skill_baoxue_1;equip_skill_baoxue_2;equip_skill_baoxue_3;equip_skill_baoxue_4,no,,80,,NO,hero01_snowstorm,player_hit_big,,player_attack_gethit,bt_skill06,暴风雪,对目标所在区域释放暴风雪，对该区域的敌人造成持续冰冻伤害
 equip_skill_bingzhui,NO,atk_1,0,9999,0.5,0.2,0.03,0.1,1.2,1,range,equip_skill_bingzhui,no,,30,,NO,hero01_snowstorm_hit,player_hit_big,,player_attack_gethit,bt_skill05,冰锥,召唤冰锥瞬间对目标造成高额伤害
 equip_skill_hou,NO,atk_1,0,9999,0,0.2,0.03,0.1,1.2,1,range,equip_skill_hou,no,,30,,NO,,player_hit_big,,player_attack_gethit,bt_skill04,圣光怒吼,瞬间对身边的敌人造成神圣伤害
-equip_skill_chongfeng,NO,run,0,10,0,0,0.03,0.1,1.2,1,missile;dart,equip_skill_chongfeng;equip_skill_chongfeng,no,,30,dodge_1,NO,hero01_lionroar,player_hit_big,,player_attack_gethit,bt_skill04,正义冲锋,瞬间冲到敌人面前对其造成伤害

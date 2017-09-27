@@ -98,6 +98,16 @@ namespace CSVDataUtility {
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
         }
+
+
+        public static string GetRelativePathToResourcsFolder(string path)
+        {
+            string identifier = "Resources";
+            int i = path.LastIndexOf(identifier);
+            string result = path.Substring(i + identifier.Length);
+            result = result.TrimStart('\\', '/');
+            return result;
+        }
     }
 
 }

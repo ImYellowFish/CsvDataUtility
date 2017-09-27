@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 [System.Serializable]
 [CSVFilename("Skill1")]
+[CSVDataAsset("SkillDataTable")]
 public class SkillDataEntry : CSVDataUtility.IDataEntry{
             
 	[CSVField("id")]
