@@ -8,6 +8,7 @@ namespace CSVDataUtility {
         private static void GenerateSingle() {
             var selected = Selection.activeObject as TextAsset;
             Generate(selected);
+            AssetDatabase.Refresh();
         }
 
         [MenuItem("Assets/CSV Data Utility/Generate class for csv", true)]
@@ -44,7 +45,8 @@ namespace CSVDataUtility {
                 }
             }
 
-            Debug.Log("Generate Complte. Success count = " + successCount + ", Failed count = " + failCount);
+            AssetDatabase.Refresh();
+            Debug.Log("Generate Complete. Success count = " + successCount + ", Failed count = " + failCount);
         }
 
         [MenuItem("Assets/CSV Data Utility/Generate class for folder(non-recursive)", true)]

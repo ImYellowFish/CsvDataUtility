@@ -58,16 +58,27 @@ namespace CSVDataUtility {
 
 
         public void Read() {
-            //ReadFromCsv();
-            ReadFromDataAsset();
+            if (Helper.ImportSetting.UseScriptableObject)
+            {
+                try
+                {
+                    ReadFromDataAsset();
+                }
+                catch
+                {
+                    ReadFromCsv();
+                }
+            }
+            else
+                ReadFromCsv();
         }
 
-        protected void ReadFromCsv()
+        public void ReadFromCsv()
         {
             string csvFilename = CSVFilenameAttribute.GetCsvFilename(typeof(T));
-            if (Helper.ImportSetting.CsvFolderRelativeResourcesPath.Trim() != "")
+            if (Helper.ImportSetting.CsvFolderRelativePathToResources.Trim() != "")
             {
-                csvFilename = Helper.ImportSetting.CsvFolderRelativeResourcesPath + "/" + csvFilename;
+                csvFilename = Helper.ImportSetting.CsvFolderRelativePathToResources + "/" + csvFilename;
             }
 
             if (csvFilename == null)
@@ -84,15 +95,15 @@ namespace CSVDataUtility {
         }
 
 
-        protected void ReadFromDataAsset()
+        public void ReadFromDataAsset()
         {
             string dataAssetPath = CSVDataAssetAttribute.GetDataTableName(typeof(T));
-            if (Helper.ImportSetting.DataAssetRelativePath.Trim() != "")
+            if (Helper.ImportSetting.DataAssetRelativePathToProject.Trim() != "")
             {
-                dataAssetPath = Helper.ImportSetting.DataAssetRelativePath + "/" + dataAssetPath;
+                dataAssetPath = Helper.ImportSetting.DataAssetRelativePathToProject + "/" + dataAssetPath;
             }
 
-            dataAssetPath = Helper.GetRelativePathToResourcsFolder(dataAssetPath);
+            dataAssetPath = Helper.GetRelativePathToResourcesFolder(dataAssetPath);
 
             var obj = Resources.Load(dataAssetPath);
             DataAsset<T> dataAsset = obj as DataAsset<T>;

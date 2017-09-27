@@ -100,11 +100,25 @@ namespace CSVDataUtility {
         }
 
 
-        public static string GetRelativePathToResourcsFolder(string path)
+        public static string GetRelativePathToResourcesFolder(string path)
         {
-            string identifier = "Resources";
-            int i = path.LastIndexOf(identifier);
-            string result = path.Substring(i + identifier.Length);
+            return GetRelativePathToFolder(path, "Resources");
+        }
+
+        public static string GetRelativePathToAssetsFolder(string path)
+        {
+            return GetRelativePathToFolder(path, "Assets");
+        }
+
+        private static string GetRelativePathToFolder(string path, string folderIdentifier)
+        {
+            if (path.Trim() == "")
+            {
+                return "";
+            }
+
+            int i = path.LastIndexOf(folderIdentifier);
+            string result = path.Substring(i + folderIdentifier.Length);
             result = result.TrimStart('\\', '/');
             return result;
         }

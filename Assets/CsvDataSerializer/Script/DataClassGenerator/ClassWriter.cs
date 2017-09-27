@@ -58,8 +58,11 @@ namespace CSVDataUtility {
             mainClassFile.Write("\n");
             WriteExtensionClass();
 
-            WriteDataAssetClass();
-            WriteDataAssetClassEditor();
+            if (Helper.ImportSetting.UseScriptableObject)
+            {
+                WriteDataAssetClass();
+                WriteDataAssetClassEditor();
+            }
 
             CloseFiles();
         }
@@ -67,16 +70,20 @@ namespace CSVDataUtility {
 
         private void PrepareFiles()
         {
-            var assetClassSavePath = savePath + "\\DataAsset";
-            var editorClassSavePath = savePath + "\\Editor";
-            
             Helper.CreateDirectoryIfNotExist(savePath);
-            Helper.CreateDirectoryIfNotExist(assetClassSavePath);
-            Helper.CreateDirectoryIfNotExist(editorClassSavePath);
-
             mainClassFile = File.CreateText(savePath + "\\" + dataEntryName + ".cs");
-            assetClassFile = File.CreateText(assetClassSavePath + "\\" + dataTableName + "_Asset.cs");
-            assetClassEditorFile = File.CreateText(editorClassSavePath + "\\" + dataTableName + "_AssetEditor.cs");
+
+            if (Helper.ImportSetting.UseScriptableObject)
+            {
+                var assetClassSavePath = savePath + "\\DataAsset";
+                var editorClassSavePath = savePath + "\\Editor";
+
+                Helper.CreateDirectoryIfNotExist(assetClassSavePath);
+                Helper.CreateDirectoryIfNotExist(editorClassSavePath);
+
+                assetClassFile = File.CreateText(assetClassSavePath + "\\" + dataTableName + "_Asset.cs");
+                assetClassEditorFile = File.CreateText(editorClassSavePath + "\\" + dataTableName + "_AssetEditor.cs");
+            }
         }
 
         private void CloseFiles()

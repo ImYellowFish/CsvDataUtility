@@ -18,7 +18,7 @@ namespace CSVDataUtility
         public void Read()
         {
             DataTable<T> dataTable = new DataTable<T>();
-            dataTable.Read();
+            dataTable.ReadFromCsv();
             
             var values = dataTable.Values;
             int dataCount = values.Count;

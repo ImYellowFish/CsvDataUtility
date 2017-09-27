@@ -10,19 +10,29 @@ namespace CSVDataUtility {
         string DataEntryFolderFullPath { get; }
 
         /// <summary>
-        /// Relative path to Project folder containing generated scripts
+        /// Relative path to the Project folder containing generated scripts
         /// </summary>
-        string DataEntryFolderRelativePath { get; }
+        string DataEntryFolderRelativePathToProject { get; }
 
         /// <summary>
-        /// Relative path to Resources folder containing excel files
+        /// Relative path to the Resources folder containing excel files
         /// </summary>
-        string CsvFolderRelativeResourcesPath { get; }
+        string CsvFolderRelativePathToResources { get; }
 
         /// <summary>
-        /// Relative path to Project folder containing generated asset files
+        /// Relative path to the Project folder containing generated asset files
         /// </summary>
-        string DataAssetRelativePath { get; }
+        string DataAssetRelativePathToProject { get; }
+
+        /// <summary>
+        /// Relative path to the Resources folder containing generated asset files
+        /// </summary>
+        string DataAssetRelativePathToResources { get; }
+
+        /// <summary>
+        /// If true, data will be transferred into scriptableObjects, instead of excel files
+        /// </summary>
+        bool UseScriptableObject { get; }
 
         /// <summary>
         /// Look for special rules about code generation

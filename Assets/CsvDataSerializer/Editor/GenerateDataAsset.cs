@@ -25,7 +25,7 @@ namespace CSVDataUtility
         {
             var dataAsset = asset as IDataAsset;
             dataAsset.Read();
-            string folderPath = Helper.ImportSetting.DataAssetRelativePath;
+            string folderPath = Helper.ImportSetting.DataAssetRelativePathToProject;
             Helper.CreateDirectoryIfNotExist(folderPath);
 
             string assetName = CSVDataAssetAttribute.GetDataTableName(asset);
@@ -48,11 +48,15 @@ namespace CSVDataUtility
                 .Where(p => dataAssetInterface.IsAssignableFrom(p) && !p.IsAbstract && !p.IsInterface);
 
             foreach (var type in types) {
-                Debug.Log(type.Name);
                 var asset = ScriptableObject.CreateInstance(type.Name);
                 ReadAsset(asset);
             }
         }
 
+        //[MenuItem("Assets/CSV Data Utility/DataAsset/Create All", validate = true)]
+        //private static bool CreateAllDataAssetsValidate()
+        //{
+        //    return Helper.ImportSetting.UseScriptableObject;
+        //}
     }
 }
