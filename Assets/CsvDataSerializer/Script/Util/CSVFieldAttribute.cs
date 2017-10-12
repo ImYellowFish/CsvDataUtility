@@ -72,3 +72,20 @@ public class CSVDataAssetAttribute : Attribute
         return GetDataTableName(target.GetType());
     }
 }
+
+[AttributeUsage(AttributeTargets.Field)]
+public class CSVInternalIndexAttribute : Attribute
+{
+    public static bool IsInternalIndex(MemberInfo m)
+    {
+        object[] attributes = m.GetCustomAttributes(true);
+        for (int i = 0; i < attributes.Length; i++)
+        {
+            if (attributes[i] is CSVInternalIndexAttribute)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+}

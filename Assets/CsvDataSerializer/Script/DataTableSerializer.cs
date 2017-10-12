@@ -73,9 +73,16 @@ namespace CSVDataUtility {
                 FieldInfo field = targetFieldInfos[i];
                 currentColumn = i;
 
+                // if this field is internal index, assign the row number.
+                if (IsInternalIndexField(field))
+                {
+                    field.SetValue(resultRowObj, currentRow);
+                    continue;
+                }
+
                 // check whether the class field matches csv fields
                 string expectedCsvFieldName = GetCSVFieldNameByFieldInfo(field);
-
+                
                 if (expectedCsvFieldName == null) {
                     // CSVHelper.LogWarning("Field skipped for type: " + targetType.Name + ", field: " + field.Name);
 
@@ -83,7 +90,7 @@ namespace CSVDataUtility {
                     throw new CSVParseException("Field not marked for deserialization: " + 
                         targetType.Name + ", field: " + field.Name, currentColumn, currentRow);
                 }
-
+                
                 if (!csvFields.Contains(expectedCsvFieldName)) {
                     throw new CSVParseException(
                         "Cannot find csv field for class: " +
@@ -181,6 +188,11 @@ namespace CSVDataUtility {
             return CSVFieldAttribute.GetCsvFieldName(field);
         }
         
+        private static bool IsInternalIndexField(FieldInfo field)
+        {
+            return CSVInternalIndexAttribute.IsInternalIndex(field);
+        }
+
         private string GetKeyStringForRow(int row)
         {
             return splitContent[row][keyIndex];

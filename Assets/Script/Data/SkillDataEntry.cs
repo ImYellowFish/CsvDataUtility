@@ -96,6 +96,9 @@ public class SkillDataEntry : CSVDataUtility.IDataEntry{
             return id;    
         } 
     }
+    
+    [CSVInternalIndex]
+    public int internal_dataEntryIndex;
 }
 
 

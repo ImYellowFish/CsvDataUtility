@@ -128,6 +128,9 @@ DATA_ENTRY_CONTENT
             return KEY_VARIABLE_NAME;    
         } 
     }
+    
+    [CSVInternalIndex]
+    public int internal_dataEntryIndex;
 }
 ";
         private string dataEntryClassFramework;

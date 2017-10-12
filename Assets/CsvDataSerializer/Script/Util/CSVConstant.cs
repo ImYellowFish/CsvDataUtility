@@ -16,5 +16,7 @@
         public const string EMPTY_ITEM = "";
         public const char ARRAY_DELIMITER = ';';
         public const char FLAG_DELIMITER = ';';
+
+        public const string INTERNAL_INDEX_FIELD = "internal_dataEntryIndex";
     }
 }
