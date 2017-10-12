@@ -18,5 +18,6 @@
         public const char FLAG_DELIMITER = ';';
 
         public const string INTERNAL_INDEX_FIELD = "internal_dataEntryIndex";
+        public const int INTERNAL_INDEX_OFFSET = -2;
     }
 }

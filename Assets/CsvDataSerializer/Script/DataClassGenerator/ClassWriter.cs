@@ -130,7 +130,8 @@ DATA_ENTRY_CONTENT
     }
     
     [CSVInternalIndex]
-    public int internal_dataEntryIndex;
+    public int m_internal_dataEntryIndex;
+    public int internal_dataEntryIndex { get { return m_internal_dataEntryIndex; } }
 }
 ";
         private string dataEntryClassFramework;

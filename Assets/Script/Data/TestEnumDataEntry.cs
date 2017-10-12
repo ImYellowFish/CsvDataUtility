@@ -49,6 +49,10 @@ public class TestEnumDataEntry : CSVDataUtility.IDataEntry{
             return id;    
         } 
     }
+    
+    [CSVInternalIndex]
+    public int m_internal_dataEntryIndex;
+    public int internal_dataEntryIndex { get { return m_internal_dataEntryIndex; } }
 }
 
 

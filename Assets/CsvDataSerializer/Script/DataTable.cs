@@ -26,7 +26,10 @@ namespace CSVDataUtility {
             get {
                 if(valueArray == null) {
                     valueArray = new T[Values.Count];
-                    Values.CopyTo(valueArray, 0);
+                    foreach(var value in Values)
+                    {
+                        valueArray[value.internal_dataEntryIndex] = value;
+                    }
                 }
                 return valueArray;
             }

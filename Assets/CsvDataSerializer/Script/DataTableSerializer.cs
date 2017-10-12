@@ -76,7 +76,7 @@ namespace CSVDataUtility {
                 // if this field is internal index, assign the row number.
                 if (IsInternalIndexField(field))
                 {
-                    field.SetValue(resultRowObj, currentRow);
+                    field.SetValue(resultRowObj, currentRow + CSVConstant.INTERNAL_INDEX_OFFSET);
                     continue;
                 }
 
