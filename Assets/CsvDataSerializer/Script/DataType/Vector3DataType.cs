@@ -34,5 +34,13 @@ namespace CSVDataUtility {
 
             return result;
         }
+
+        public override Type SystemType
+        {
+            get
+            {
+                return typeof(Vector3);
+            }
+        }
     }
 }

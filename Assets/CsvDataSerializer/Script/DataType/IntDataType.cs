@@ -20,5 +20,13 @@ namespace CSVDataUtility {
                 throw CreateItemParseException(TypeName);
             }
         }
+
+        public override Type SystemType
+        {
+            get
+            {
+                return typeof(int);
+            }
+        }
     }
 }

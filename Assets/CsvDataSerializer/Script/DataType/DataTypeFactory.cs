@@ -1,12 +1,11 @@
-﻿using System.Collections.Generic;
-using System;
+﻿using CSVDataUtility.Action;
 
 namespace CSVDataUtility {
     public class DataTypeFactory {
         #region Extensible
         // Add new base types here 
         // (A type is a base type if its csv identifier does not include "<>")
-        private IDataType[] baseTypes = new IDataType[] {
+        private static IDataType[] baseTypes = new IDataType[] {
                 new IntDataType(),
                 new FloatDataType(),
                 new BoolDataType(),
@@ -34,6 +33,11 @@ namespace CSVDataUtility {
                 return new FlagDataType(typeInfo, nesting);
             }
 
+            else if (prefix == CSVConstant.ACTION_TYPE)
+            {
+                return new ActionDataType(prefix, nesting);
+            }
+
             throw new CSVParseException("Unknown data type in csv: " + prefix + "+" + nesting);
         }
         #endregion
@@ -54,7 +58,7 @@ namespace CSVDataUtility {
 
         
 
-        private IDataType GetBaseDataType(string csvTypeField)
+        public static IDataType GetBaseDataType(string csvTypeField)
         {
             for (int i = 0; i < baseTypes.Length; i++)
             {

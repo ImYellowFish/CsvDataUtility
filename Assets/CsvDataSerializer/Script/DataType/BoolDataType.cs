@@ -21,5 +21,13 @@ namespace CSVDataUtility {
             }
             throw new CSVParseException("Unrecognized input for bool type: " + rawItem);
         }
+
+        public override Type SystemType
+        {
+            get
+            {
+                return typeof(bool);
+            }
+        }
     }
 }

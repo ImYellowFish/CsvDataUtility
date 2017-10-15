@@ -73,5 +73,8 @@ namespace CSVDataUtility {
             }
 
         }
+
+        public DataTypeDeserializeExtraInfo deserializeExtraInfo { get; set; }
+
     }
 }

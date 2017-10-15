@@ -39,6 +39,12 @@
         /// <returns></returns>
         object Deserialize(string item, System.Type expectedType);
 
+
+        /// <summary>
+        /// Extra info needed for deserialization.
+        /// Set before calling Deserialize(string,Type).
+        /// </summary>
+        DataTypeDeserializeExtraInfo deserializeExtraInfo { set; }
     }
 
 

@@ -17,5 +17,13 @@ namespace CSVDataUtility {
         public override object Deserialize(string rawItem, Type expectedType) {
             return rawItem;
         }
+
+        public override Type SystemType
+        {
+            get
+            {
+                return typeof(string);
+            }
+        }
     }
 }

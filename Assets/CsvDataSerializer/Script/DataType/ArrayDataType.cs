@@ -105,6 +105,9 @@ namespace CSVDataUtility {
             return array;
         }
 
+        public DataTypeDeserializeExtraInfo deserializeExtraInfo { get; set; }
+
+
         private void AddToArray(object array, object value) {
             try {
                 listAddMethod.Invoke(array, new[] { value });

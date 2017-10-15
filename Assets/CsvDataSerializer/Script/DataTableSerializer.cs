@@ -73,13 +73,17 @@ namespace CSVDataUtility {
                 FieldInfo field = targetFieldInfos[i];
                 currentColumn = i;
 
+                // If this field is marked with NonSerialized, skip
+                if (!IsSerializable(field))
+                    continue;
+
                 // if this field is internal index, assign the row number.
                 if (IsInternalIndexField(field))
                 {
                     field.SetValue(resultRowObj, currentRow + CSVConstant.INTERNAL_INDEX_OFFSET);
                     continue;
                 }
-
+                
                 // check whether the class field matches csv fields
                 string expectedCsvFieldName = GetCSVFieldNameByFieldInfo(field);
                 
@@ -107,9 +111,10 @@ namespace CSVDataUtility {
                 // assign item info
                 string typeInfo = csvTypes[index];
                 string rawItem = rowData[index];
-                
+                string variableName = csvFields[index];
+
                 // Deserialize item
-                object targetValue = DeserializeItem(rawItem, typeInfo, field.FieldType);
+                object targetValue = DeserializeItem(rawItem, typeInfo, variableName, field.FieldType, targetType);
                 
                 if (targetValue.GetType() != field.FieldType) {
                     throw new CSVParseException(
@@ -137,14 +142,16 @@ namespace CSVDataUtility {
         /// </summary>
         /// <param name="item"></param>
         /// <param name="typeInfo"></param>
-        /// <param name="expectedType"></param>
+        /// <param name="expectedItemType"></param>
         /// <returns></returns>
-        public object DeserializeItem(string item, string typeInfo, Type expectedType)
+        public object DeserializeItem(string item, string typeInfo, string variableName, Type expectedItemType, Type dataEntryType)
         {
             IDataType dataType = dataTypeFactory.GetDataType(typeInfo);
+            dataType.deserializeExtraInfo = new DataTypeDeserializeExtraInfo(variableName, dataEntryType);
+
             try
             {
-                return dataType.Deserialize(Helper.CorrectDataItemString(item), expectedType);
+                return dataType.Deserialize(Helper.CorrectDataItemString(item), expectedItemType);
             }
             catch(CSVParseException e)
             {
@@ -186,6 +193,19 @@ namespace CSVDataUtility {
 
         private static string GetCSVFieldNameByFieldInfo(FieldInfo field) {
             return CSVFieldAttribute.GetCsvFieldName(field);
+        }
+
+        private static bool IsSerializable(FieldInfo field)
+        {
+            object[] attributes = field.GetCustomAttributes(true);
+            for (int i = 0; i < attributes.Length; i++)
+            {
+                if (attributes[i] is NonSerializedAttribute)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
         
         private static bool IsInternalIndexField(FieldInfo field)

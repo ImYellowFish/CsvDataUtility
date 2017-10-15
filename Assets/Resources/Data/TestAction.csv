@@ -1,0 +1,4 @@
+ID,ActionTest
+string;key,action<tac1<string;int> tac2<float>>
+boss,tac1<testName;10> tac2<300> tac2<105>
+hero,tac2<100> tac1<Jimmy;15>
