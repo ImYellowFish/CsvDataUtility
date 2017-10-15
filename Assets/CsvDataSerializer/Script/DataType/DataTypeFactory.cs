@@ -16,11 +16,11 @@ namespace CSVDataUtility {
         
         // Add new nested types here 
         // (A type is a base type if its csv identifier includes "<>")
-        private IDataType GetNestedDataType(string typeInfo, string prefix, string nesting, string variableName)
+        private IDataType GetNestedDataType(string typeInfo, string prefix, string nesting, string csvFieldName)
         {
             if (prefix == CSVConstant.ARRAY_TYPE)
             {
-                IDataType baseType = GetDataType(nesting, variableName);
+                IDataType baseType = GetDataType(nesting, csvFieldName);
                 return new ArrayDataType(baseType);
             }
 
@@ -49,16 +49,16 @@ namespace CSVDataUtility {
         #endregion
         
 
-        public IDataType GetDataType(string csvTypeField, string variableName) {
+        public IDataType GetDataType(string csvTypeField, string csvFieldName) {
             string prefix;
             string nesting;
             // Check for nesting type first, e.g. list<> and enum<>
             if(Helper.AnalyzeNestingTypeInfo(csvTypeField, out prefix, out nesting))
             {
-                var dataType = GetNestedDataType(csvTypeField, Helper.CorrectHeadItemString(prefix), nesting, variableName);
-                if(!(dataType is RefDataType) && !historyDataTypes.ContainsKey(variableName))
+                var dataType = GetNestedDataType(csvTypeField, Helper.CorrectHeadItemString(prefix), nesting, csvFieldName);
+                if(!(dataType is RefDataType) && !historyDataTypes.ContainsKey(csvFieldName))
                 {
-                    historyDataTypes.Add(variableName, dataType);
+                    historyDataTypes.Add(csvFieldName, dataType);
                 }
 
                 return dataType;

@@ -17,13 +17,13 @@ public class TestRefDataEntry : CSVDataUtility.IDataEntry{
 	[CSVField("id")]
 	public string id;
 
-	[CSVField("original")]
-	public original_values original;
+	[CSVField("original field")]
+	public original_field_values original_field;
 
-	public enum original_values { a = 0, b = 1, c = 2, }
+	public enum original_field_values { a = 0, b = 1, c = 2, }
 
 	[CSVField("refer")]
-	public original_values refer;
+	public original_field_values refer;
 
 
 

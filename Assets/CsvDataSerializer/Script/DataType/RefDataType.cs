@@ -5,19 +5,20 @@ namespace CSVDataUtility
 {
     public class RefDataType : IDataType
     {
+        private string refCsvFieldName;
         private string refVariableName;
         private IDataType refType;
 
-        public RefDataType(string refVariableName, Dictionary<string, IDataType> historyDataTypes)
+        public RefDataType(string refRawCsvFieldName, Dictionary<string, IDataType> historyDataTypes)
         {
-            refVariableName = Helper.CorrectHeadItemString(refVariableName);
-            this.refVariableName = refVariableName;
+            refCsvFieldName = Helper.CorrectHeadItemString(refRawCsvFieldName);
+            refVariableName = Helper.GetValidScriptVariableName(refRawCsvFieldName, true);
 
-            if (!historyDataTypes.ContainsKey(refVariableName))
+            if (!historyDataTypes.ContainsKey(refCsvFieldName))
             {
-                throw new CSVParseException("Cannot find ref variable: " + refVariableName);
+                throw new CSVParseException("Cannot find ref variable. raw: " + refRawCsvFieldName + ", simplified: " + refCsvFieldName);
             }
-            refType = historyDataTypes[refVariableName];
+            refType = historyDataTypes[refCsvFieldName];
         }
 
         public bool IsType(string csvTypeField)

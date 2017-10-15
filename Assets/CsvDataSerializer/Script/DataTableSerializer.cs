@@ -111,10 +111,10 @@ namespace CSVDataUtility {
                 // assign item info
                 string typeInfo = csvTypes[index];
                 string rawItem = rowData[index];
-                string variableName = csvFields[index];
+                string csvFieldName = csvFields[index];
 
                 // Deserialize item
-                object targetValue = DeserializeItem(rawItem, typeInfo, variableName, field.FieldType, targetType);
+                object targetValue = DeserializeItem(rawItem, typeInfo, csvFieldName, field.FieldType, targetType);
                 
                 if (targetValue.GetType() != field.FieldType) {
                     throw new CSVParseException(
@@ -144,10 +144,10 @@ namespace CSVDataUtility {
         /// <param name="typeInfo"></param>
         /// <param name="expectedItemType"></param>
         /// <returns></returns>
-        public object DeserializeItem(string item, string typeInfo, string variableName, Type expectedItemType, Type dataEntryType)
+        public object DeserializeItem(string item, string typeInfo, string csvFieldName, Type expectedItemType, Type dataEntryType)
         {
-            IDataType dataType = dataTypeFactory.GetDataType(typeInfo, variableName);
-            dataType.deserializeExtraInfo = new DataTypeDeserializeExtraInfo(variableName, dataEntryType);
+            IDataType dataType = dataTypeFactory.GetDataType(typeInfo, csvFieldName);
+            dataType.deserializeExtraInfo = new DataTypeDeserializeExtraInfo(csvFieldName, dataEntryType);
 
             try
             {

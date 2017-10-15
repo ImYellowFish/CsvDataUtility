@@ -1,4 +1,4 @@
-ID,Original,Refer
-string;key, enum <a;b;c>, ref <Original>
+ID,Original Field,Refer
+string;key, enum <a;b;c>, ref <Original Field>
 boss,a,c
 hero,b,b
