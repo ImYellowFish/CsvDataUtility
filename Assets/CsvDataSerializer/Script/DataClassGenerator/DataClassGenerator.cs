@@ -82,7 +82,7 @@ namespace CSVDataUtility {
             if (variableName.Contains(CSVConstant.IDENTIFIER_OMIT_COLUMN))
                 return;
 
-            IDataType dataType = dataTypeFactory.GetDataType(typeInfo);
+            IDataType dataType = dataTypeFactory.GetDataType(typeInfo, fieldName);
             classWriter.ProcessVariable(fieldName, variableName, dataType);
         }
         

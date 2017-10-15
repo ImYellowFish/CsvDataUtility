@@ -1,0 +1,4 @@
+ID,Original,Refer
+string;key, enum <a;b;c>, ref <Original>
+boss,a,c
+hero,b,b

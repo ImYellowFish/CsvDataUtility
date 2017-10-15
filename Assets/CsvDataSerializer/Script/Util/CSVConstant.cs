@@ -11,6 +11,7 @@
         public const string ENUM_TYPE = "enum";
         public const string FLAG_TYPE = "flag";
         public const string ACTION_TYPE = "action";
+        public const string REF_TYPE = "ref";
 
         public const string BOOL_TRUE = "yes";
         public const string BOOL_FALSE = "no";

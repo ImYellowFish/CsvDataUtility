@@ -44,7 +44,7 @@
         /// Extra info needed for deserialization.
         /// Set before calling Deserialize(string,Type).
         /// </summary>
-        DataTypeDeserializeExtraInfo deserializeExtraInfo { set; }
+        DataTypeDeserializeExtraInfo deserializeExtraInfo { get; set; }
     }
 
 

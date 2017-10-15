@@ -7,7 +7,7 @@ namespace CSVDataUtility {
     public class DataTableSerializer {
         
         private DataTypeFactory dataTypeFactory = new DataTypeFactory();
-        
+
         private List<string[]> splitContent;
         
         private List<string> csvFields;
@@ -16,7 +16,7 @@ namespace CSVDataUtility {
 
         private int currentRow;
         private int currentColumn;
-
+        
         public DataTableSerializer(string csvContentText) {
             CSVReader reader = new CSVReader(csvContentText);
             splitContent = reader.Read();
@@ -146,7 +146,7 @@ namespace CSVDataUtility {
         /// <returns></returns>
         public object DeserializeItem(string item, string typeInfo, string variableName, Type expectedItemType, Type dataEntryType)
         {
-            IDataType dataType = dataTypeFactory.GetDataType(typeInfo);
+            IDataType dataType = dataTypeFactory.GetDataType(typeInfo, variableName);
             dataType.deserializeExtraInfo = new DataTypeDeserializeExtraInfo(variableName, dataEntryType);
 
             try
