@@ -31,7 +31,8 @@ namespace CSVDataUtility.Action
                 var action = actions[i];
                 result += ActionItemDeclarationTemplate.
                     Replace("ACTION_NAME", action.GetFieldName(variableName)).
-                    Replace("ACTION_PARAMETER_TYPES", GetActionParameterTypes(action));
+                    Replace("ACTION_PARAMETER_TYPES", GetActionParameterTypes(action)).
+                    Replace("<>", "");  // case for zero parameters
             }
             return result;
         }

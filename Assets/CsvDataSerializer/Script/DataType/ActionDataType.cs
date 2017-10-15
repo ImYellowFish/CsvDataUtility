@@ -17,7 +17,7 @@ namespace CSVDataUtility.Action
             ParseAllActions(nesting);   
         }
         
-        private static readonly string actionMatchPattern = @"[\w\d_]+<[\w\d_;]+>";
+        private static readonly string actionMatchPattern = @"[\w\d_]+<[\w\d_;]*>";
         private void ParseAllActions(string actionListInfo)
         {
             var matches = Regex.Matches(actionListInfo, actionMatchPattern);
