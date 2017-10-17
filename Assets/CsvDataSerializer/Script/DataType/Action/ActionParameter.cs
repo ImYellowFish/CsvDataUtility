@@ -21,11 +21,15 @@ namespace CSVDataUtility.Action
             {
                 if (boxedValue == null)
                 {
-                    var dataType = DataTypeFactory.GetBaseDataType(typeInfo);
-                    boxedValue = dataType.Deserialize(serializedValue, null);
+                    DeserializeValue();
                 }
                 return boxedValue;
             }
+        }
+
+        public void DeserializeValue() {
+            var dataType = DataTypeFactory.GetBaseDataType(typeInfo);
+            boxedValue = dataType.Deserialize(serializedValue, null);
         }
     }
 }

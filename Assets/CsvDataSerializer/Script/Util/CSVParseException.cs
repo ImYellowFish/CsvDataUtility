@@ -5,7 +5,7 @@
         }
 
         public CSVParseException(string message, int row, int column) :
-            base(message + ">>> error coord: (" + row + "," + column + ")") {
+            base(">>>csv error coord: (" + row + "," + column + "), " + message) {
         }
 
         public CSVParseException(string message, string item, int row, int column) :
