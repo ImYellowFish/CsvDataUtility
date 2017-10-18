@@ -124,6 +124,15 @@ namespace CSVDataUtility {
         }
 
 
+        public static MethodInfo GetAddMethodForListType(System.Type listType)
+        {
+            return listType.GetMethod("Add");
+        }
+
+        public static System.Type GetBaseTypeForListType(System.Type listType)
+        {
+            return listType.GetGenericArguments()[0];
+        }
     }
 
 }

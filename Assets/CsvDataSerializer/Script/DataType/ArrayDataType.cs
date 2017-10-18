@@ -68,8 +68,8 @@ namespace CSVDataUtility {
             try
             {
                 this.listSystemType = expectedListType;
-                this.baseSystemType = expectedListType.GetGenericArguments()[0];
-                listAddMethod = expectedListType.GetMethod("Add");
+                this.baseSystemType = Helper.GetBaseTypeForListType(expectedListType);
+                listAddMethod = Helper.GetAddMethodForListType(expectedListType);
 
             }
             catch (System.Exception e)
@@ -108,7 +108,7 @@ namespace CSVDataUtility {
         public DataTypeDeserializeExtraInfo deserializeExtraInfo { get; set; }
 
 
-        private void AddToArray(object array, object value) {
+        public void AddToArray(object array, object value) {
             try {
                 listAddMethod.Invoke(array, new[] { value });
             } catch (Exception) {

@@ -1,0 +1,4 @@
+ID,Person Info,Education
+string;key,struct<string city;int age;float height>,array<struct<int year;string school>>
+Tommy,NewYork;15;148,1998;StSan;2001;MIT
+Jim,Beijing;21;173,1995;StHK;1999;BIT;2013;CIT

@@ -79,9 +79,10 @@ namespace CSVDataUtility.Action
             string[] rawValues = paramsTypeStr.Split(';');
             foreach (string childTypeField in rawValues)
             {
-                if (childTypeField == "")
+                var correctedType = Helper.CorrectHeadItemString(childTypeField);
+                if (correctedType == "")
                     continue;
-                var childDataType = DataTypeFactory.GetBaseDataType(childTypeField);
+                var childDataType = DataTypeFactory.GetBaseDataType(correctedType);
                 parameterTypes.Add(childDataType);
             }
         }

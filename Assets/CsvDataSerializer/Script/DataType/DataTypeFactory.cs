@@ -20,8 +20,14 @@ namespace CSVDataUtility {
         {
             if (prefix == CSVConstant.ARRAY_TYPE)
             {
-                IDataType baseType = GetDataType(nesting, csvFieldName);
-                return new ArrayDataType(baseType);
+                IDataType arrayType;
+                if (!TryGetSpecialArrayType(nesting, out arrayType))
+                {
+                    // use default ArrayDataType
+                    IDataType baseType = GetDataType(nesting, csvFieldName);
+                    arrayType = new ArrayDataType(baseType);
+                }
+                return arrayType;
             }
 
             else if (prefix == CSVConstant.ENUM_TYPE)
@@ -44,8 +50,33 @@ namespace CSVDataUtility {
                 return new RefDataType(nesting, historyDataTypes);
             }
 
+            else if(prefix == CSVConstant.STRUCT_TYPE)
+            {
+                return new StructDataType(prefix, nesting);
+            }
+            
             throw new CSVParseException("Unknown data type in csv: " + prefix + "+" + nesting);
         }
+
+        // Add types which need a special treatment for array case, instead of the default ArrayDataType
+        public bool TryGetSpecialArrayType(string nestedTypeInfo, out IDataType specialDataTypes)
+        {
+            specialDataTypes = null;
+
+            string prefix, nesting;
+            if (!Helper.AnalyzeNestingTypeInfo(nestedTypeInfo, out prefix, out nesting))
+                return false;
+            prefix = Helper.CorrectHeadItemString(prefix);
+
+            // add new cases here
+            if (prefix == CSVConstant.STRUCT_TYPE)
+            {
+                specialDataTypes = new StructArrayDataType(prefix, nesting);
+                return true;
+            }
+            return false;
+        }
+
         #endregion
         
 
