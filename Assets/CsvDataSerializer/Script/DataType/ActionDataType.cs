@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 namespace CSVDataUtility.Action
 {
     
-    public class ActionDataType : IDataType
+    public class ActionDataType : IDataType, ICustomRefInfo
     {
         private List<ActionItem> actions;
         private string typeName;
@@ -54,11 +54,16 @@ namespace CSVDataUtility.Action
         
         public string GetAdditionalInfoForWriter(string variableName)
         {
-            ActionWriter writer = new ActionWriter(actions, variableName, variableName);
+            ActionWriter writer = new ActionWriter(actions, variableName, variableName, variableName);
             return writer.GetAdditionalInfoForDataTypeWriter();
         }
 
-        
+        public string GetAdditionalInfoForRefType(string variableName, string refVariableName) {
+            ActionWriter writer = new ActionWriter(actions, variableName, variableName, refVariableName);
+            return writer.GetInvokeMethodDefinition();
+        }
+
+
         public string GetExtensionMethodForWriter(string dataEntryName, string variableName)
         {
             return "";

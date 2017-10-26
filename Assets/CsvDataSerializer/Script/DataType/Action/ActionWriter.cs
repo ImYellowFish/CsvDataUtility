@@ -6,13 +6,15 @@ namespace CSVDataUtility.Action
     {
         private string actionInfoName;
         private string variableName;
+        private string actionPrefix;
         private List<ActionItem> actions;
 
-        public ActionWriter(List<ActionItem> actions, string actionInfoName, string variableName)
+        public ActionWriter(List<ActionItem> actions, string actionInfoName, string variableName, string actionPrefix)
         {
             this.actions = actions;
             this.actionInfoName = actionInfoName;
             this.variableName = variableName;
+            this.actionPrefix = actionPrefix;
         }
 
 
@@ -30,7 +32,7 @@ namespace CSVDataUtility.Action
             {
                 var action = actions[i];
                 result += ActionItemDeclarationTemplate.
-                    Replace("ACTION_NAME", action.GetFieldName(variableName)).
+                    Replace("ACTION_NAME", action.GetFieldName(actionPrefix)).
                     Replace("ACTION_PARAMETER_TYPES", GetActionParameterTypes(action)).
                     Replace("<>", "");  // case for zero parameters
             }
@@ -68,7 +70,7 @@ namespace CSVDataUtility.Action
         {
             string result = InvokeActionCaseTemplate
                 .Replace("ACTION_INDEX", action.index.ToString())
-                .Replace("ACTION_FIELD_NAME", action.GetFieldName(variableName))
+                .Replace("ACTION_FIELD_NAME", action.GetFieldName(actionPrefix))
                 .Replace("PARAM_COUNT", action.parameterCount.ToString())
                 .Replace("ACTION_PARAMETERS", GetInvokeMethodParameters(action));
             return result;

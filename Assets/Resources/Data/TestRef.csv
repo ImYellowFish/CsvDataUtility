@@ -1,4 +1,4 @@
-ID,Original Field,Refer
-string;key, enum <a;b;c>, ref <Original Field>
-boss,a,c
-hero,b,b
+ID,Original Enum,Refer Enum,Original ActionG, Refer ActionG
+string;key, enum <a;b;c>, ref <Original Enum>, action<call<string> dial<int;int>>, ref<Original ActionG>
+boss,a,c,call<"Jim">,dial<23;34>;call<"Mary">
+hero,b,b,,dial<56;23>

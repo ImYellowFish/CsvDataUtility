@@ -44,6 +44,9 @@ namespace CSVDataUtility
 
         public virtual string GetAdditionalInfoForWriter(string variableName)
         {
+            if(refType is ICustomRefInfo) {
+                return ((ICustomRefInfo) refType).GetAdditionalInfoForRefType(variableName, refVariableName);
+            }
             return "";
         }
 
