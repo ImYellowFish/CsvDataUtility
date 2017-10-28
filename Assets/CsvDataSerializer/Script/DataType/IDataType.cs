@@ -17,7 +17,7 @@
         /// </summary>
         string GetAdditionalInfoForWriter(string variableName);
 
-
+        
         /// <summary>
         /// Extension method in generated file that is appended after class definition
         /// </summary>

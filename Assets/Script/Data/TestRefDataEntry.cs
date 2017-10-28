@@ -17,13 +17,71 @@ public class TestRefDataEntry : CSVDataUtility.IDataEntry{
 	[CSVField("id")]
 	public string id;
 
-	[CSVField("original field")]
-	public original_field_values original_field;
+	[CSVField("original enum")]
+	public original_enum_values original_enum;
 
-	public enum original_field_values { a = 0, b = 1, c = 2, }
+	public enum original_enum_values { a = 0, b = 1, c = 2, }
 
-	[CSVField("refer")]
-	public original_field_values refer;
+	[CSVField("refer enum")]
+	public original_enum_values refer_enum;
+
+	[CSVField("original actiong")]
+	public CSVDataUtility.Action.ActionInfo original_actiong;
+
+    [System.NonSerialized]
+    public static System.Action<string> original_actiong_action_call = delegate { };
+
+    [System.NonSerialized]
+    public static System.Action<int, int> original_actiong_action_dial = delegate { };
+
+    public void Invoke_original_actiong()
+    {
+        int paramIndex = 0;
+
+        for (int i = 0; i < original_actiong.callList.Count; i++)
+        {
+            switch (original_actiong.callList[i])
+            {
+                
+                case 0:
+                    original_actiong_action_call.Invoke((string)original_actiong.paramList[paramIndex + 0].Value);
+                    paramIndex += 1;
+                    break; 
+
+                case 1:
+                    original_actiong_action_dial.Invoke((int)original_actiong.paramList[paramIndex + 0].Value, (int)original_actiong.paramList[paramIndex + 1].Value);
+                    paramIndex += 2;
+                    break; 
+
+            }
+        }
+    }
+
+	[CSVField("refer actiong")]
+	public CSVDataUtility.Action.ActionInfo refer_actiong;
+
+    public void Invoke_refer_actiong()
+    {
+        int paramIndex = 0;
+
+        for (int i = 0; i < refer_actiong.callList.Count; i++)
+        {
+            switch (refer_actiong.callList[i])
+            {
+                
+                case 0:
+                    original_actiong_action_call.Invoke((string)refer_actiong.paramList[paramIndex + 0].Value);
+                    paramIndex += 1;
+                    break; 
+
+                case 1:
+                    original_actiong_action_dial.Invoke((int)refer_actiong.paramList[paramIndex + 0].Value, (int)refer_actiong.paramList[paramIndex + 1].Value);
+                    paramIndex += 2;
+                    break; 
+
+            }
+        }
+    }
 
 
 
