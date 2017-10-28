@@ -55,13 +55,20 @@ namespace CSVDataUtility.Action
 
         public void Deserialize(string parameterInfo, string variableName, ActionInfo actionInfo)
         {
+            actionInfo.callList.Add(index);
+
+            if (Helper.CorrectHeadItemString(parameterInfo) == "")
+            {
+                // No parameters
+                return;
+            }
+
             string[] paramStringArray = parameterInfo.Split(CSVConstant.ARRAY_DELIMITER);
-            if(paramStringArray.Length != parameterCount)
+            if (paramStringArray.Length != parameterCount)
             {
                 throw new CSVParseException("Wrong action param count, expected: " + parameterCount + ", actual: " + paramStringArray.Length);
             }
 
-            actionInfo.callList.Add(index);
             for (int i = 0; i < paramStringArray.Length; i++)
             {
                 var param = paramStringArray[i];
